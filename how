@@ -1,0 +1,970 @@
+[33mcommit 906ef8a56b034e5a779d6a018fc75c06c80a8516[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Aryveee. <mhmd.aryf.edu@gmail.com>
+Date:   Thu Oct 8 13:37:16 2026 +0700
+
+    Fix for TafParserService & TafverifyService 0.0
+
+[1mdiff --git a/app/Services/TafParserService.php b/app/Services/TafParserService.php[m
+[1mindex 045bc5b..3b99aca 100644[m
+[1m--- a/app/Services/TafParserService.php[m
+[1m+++ b/app/Services/TafParserService.php[m
+[36m@@ -6,398 +6,126 @@[m
+ [m
+ class TafParserService[m
+ {[m
+[31m-    public function parseCondition(string $text): TafCondition[m
+[31m-    {[m
+[31m-        $verifier = app(TafVerifierService::class);[m
+[31m-        return $verifier->parseCondition($text);[m
+[31m-    }[m
+[31m-}[m
+[31m-[m
+[31m-class TafCondition[m
+[31m-{[m
+[31m-    public ?int $windDir = null;[m
+[31m-    public ?int $windSpeed = null;[m
+[31m-    public ?bool $gust = false;[m
+[31m-    public ?int $visibility = null;[m
+[31m-    public ?string $precipCode = 'NONE';[m
+[31m-    public ?string $cloud = null;[m
+[31m-    public ?int $ceilingFt = null;[m
+[31m-[m
+[31m-    public function merged(TafCondition $newer): TafCondition[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     * Parse TAF Raw text menjadi Object TAF terstruktur[m
+[32m+[m[32m     */[m
+[32m+[m[32m    public static function parseTaf(string $raw, ?Carbon $anchor = null): ?object[m
+     {[m
+[31m-        $out = clone $this;[m
+[31m-        if ($newer->windDir !== null) $out->windDir = $newer->windDir;[m
+[31m-        if ($newer->windSpeed !== null) $out->windSpeed = $newer->windSpeed;[m
+[31m-        if ($newer->gust !== null) $out->gust = $newer->gust;[m
+[31m-        if ($newer->visibility !== null) $out->visibility = $newer->visibility;[m
+[31m-        if ($newer->precipCode !== null && $newer->precipCode !== '') $out->precipCode = $newer->precipCode;[m
+[31m-        if ($newer->cloud !== null && $newer->cloud !== '') $out->cloud = $newer->cloud;[m
+[31m-        if ($newer->ceilingFt !== null) $out->ceilingFt = $newer->ceilingFt;[m
+[31m-[m
+[31m-        return $out;[m
+[31m-    }[m
+[32m+[m[32m        $anchor = $anchor ?? now();[m
+[32m+[m[32m        $raw = trim(preg_replace('/\s+/', ' ', $raw));[m
+[32m+[m[32m        if (empty($raw)) return null;[m
+ [m
+[31m-    public static function from(mixed $data): TafCondition[m
+[31m-    {[m
+[31m-        if ($data instanceof TafCondition) {[m
+[31m-            return $data;[m
+[31m-        }[m
+[31m-[m
+[31m-        $c = new TafCondition();[m
+[31m-        if (is_array($data)) {[m
+[31m-            $c->windDir = $data['wind_dir'] ?? $data['windDir'] ?? null;[m
+[31m-            $c->windSpeed = $data['wind_speed'] ?? $data['windSpeed'] ?? null;[m
+[31m-            $c->gust = $data['gust'] ?? false;[m
+[31m-            $c->visibility = $data['visibility'] ?? null;[m
+[31m-            $c->precipCode = $data['precip_code'] ?? $data['precipCode'] ?? 'NONE';[m
+[31m-            $c->cloud = $data['cloud'] ?? null;[m
+[31m-            $c->ceilingFt = $data['ceiling_ft'] ?? $data['ceilingFt'] ?? null;[m
+[31m-        } elseif (is_object($data)) {[m
+[31m-            $c->windDir = $data->wind_dir ?? $data->windDir ?? null;[m
+[31m-            $c->windSpeed = $data->wind_speed ?? $data->windSpeed ?? null;[m
+[31m-            $c->gust = $data->gust ?? false;[m
+[31m-            $c->visibility = $data->visibility ?? null;[m
+[31m-            $c->precipCode = $data->precip_code ?? $data->precipCode ?? 'NONE';[m
+[31m-            $c->cloud = $data->cloud ?? null;[m
+[31m-            $c->ceilingFt = $data->ceiling_ft ?? $data->ceilingFt ?? null;[m
+[31m-        }[m
+[32m+[m[32m        $verifier = app(TafVerifierService::class);[m
+ [m
+[31m-        return $c;[m
+[31m-    }[m
+[32m+[m[32m        $validStart = $anchor->copy()->startOfDay();[m
+[32m+[m[32m        $validEnd = $anchor->copy()->endOfDay();[m
+ [m
+[31m-    public function toArray(): array[m
+[31m-    {[m
+[31m-        return [[m
+[31m-            'wind_dir' => $this->windDir,[m
+[31m-            'wind_speed' => $this->windSpeed,[m
+[31m-            'gust' => $this->gust,[m
+[31m-            'visibility' => $this->visibility,[m
+[31m-            'precip_code' => $this->precipCode,[m
+[31m-            'cloud' => $this->cloud,[m
+[31m-            'ceiling_ft' => $this->ceilingFt,[m
+[31m-        ];[m
+[31m-    }[m
+[31m-}[m
+[32m+[m[32m        if (preg_match('/\b(\d{2})(\d{2})\/(\d{2})(\d{2})\b/', $raw, $m)) {[m
+[32m+[m[32m            $startDay = (int)$m[1];[m
+[32m+[m[32m            $startHour = (int)$m[2];[m
+[32m+[m[32m            $endDay = (int)$m[3];[m
+[32m+[m[32m            $endHour = (int)$m[4];[m
+ [m
+[31m-class TafVerifierService[m
+[31m-{[m
+[31m-    public function parseCondition(string $text): TafCondition[m
+[31m-    {[m
+[31m-        $c = new TafCondition();[m
+[31m-[m
+[31m-        if (preg_match('/\b(VRB|\d{3})(\d{2,3})(G\d{2,3})?KT\b/i', $text, $wind)) {[m
+[31m-            $c->windDir = (strtoupper($wind[1]) === 'VRB') ? 999 : (int) $wind[1];[m
+[31m-            $c->windSpeed = (int) $wind[2];[m
+[31m-            $c->gust = !empty($wind[3]);[m
+[31m-        }[m
+[32m+[m[32m            $validStart = $anchor->copy()->day($startDay)->setTime($startHour, 0);[m
+[32m+[m[32m            $validEnd = $anchor->copy()->day($endDay)->setTime($endHour, 0);[m
+ [m
+[31m-        if (preg_match('/\bCAVOK\b/i', $text)) {[m
+[31m-            $c->visibility = 9999;[m
+[31m-            $c->cloud = 'SKC';[m
+[31m-            $c->ceilingFt = 9999;[m
+[31m-        } else {[m
+[31m-            if (preg_match('/(?:^|\s)(\d{4})(?:\s|$)/', $text, $vis)) {[m
+[31m-                $c->visibility = (int) $vis[1];[m
+[31m-            }[m
+[31m-[m
+[31m-            if (preg_match_all('/\b(FEW|SCT|BKN|OVC)(\d{3})(?:CB|TCU)?\b/i', $text, $matches, PREG_SET_ORDER)) {[m
+[31m-                usort($matches, fn($a, $b) => (int) $a[2] <=> (int) $b[2]);[m
+[31m-                $c->cloud = strtoupper($matches[0][1]);[m
+[31m-                $c->ceilingFt = ((int) $matches[0][2]) * 100;[m
+[31m-            } elseif (preg_match('/\b(NSC|NCD|SKC)\b/i', $text)) {[m
+[31m-                $c->cloud = 'SKC';[m
+[31m-                $c->ceilingFt = 9999;[m
+[32m+[m[32m            if ($endDay < $startDay) {[m
+[32m+[m[32m                $validEnd->addMonth();[m
+             }[m
+         }[m
+ [m
+[31m-        if (preg_match_all('/(?<![A-Z0-9])([+-]?(?:SH)?(?:RA|DZ|SN|SG|PL|GR|GS))(?![A-Z0-9])/i', $text, $wxMatches)) {[m
+[31m-            $rainTokens = array_values(array_filter($wxMatches[1], fn($w) => str_ends_with(strtoupper($w), 'RA')));[m
+[31m-            if (!empty($rainTokens)) {[m
+[31m-                $c->precipCode = strtoupper($rainTokens[0]);[m
+[31m-            } else {[m
+[31m-                $c->precipCode = 'NONE';[m
+[31m-            }[m
+[31m-        } elseif (preg_match('/\bNSW\b/i', $text)) {[m
+[31m-            $c->precipCode = 'NONE';[m
+[31m-        } else {[m
+[31m-            $c->precipCode = 'NONE';[m
+[31m-        }[m
+[31m-[m
+[31m-        return $c;[m
+[31m-    }[m
+[32m+[m[32m        $groups = [];[m
+ [m
+[31m-    public function visibilityClass(?int $v): ?int[m
+[31m-    {[m
+[31m-        if ($v === null) return null;[m
+[31m-        if ($v < 800) return 1;[m
+[31m-        if ($v < 1500) return 2;[m
+[31m-        if ($v < 3000) return 3;[m
+[31m-        if ($v <= 5000) return 4;[m
+[31m-        return 5;[m
+[31m-    }[m
+[31m-[m
+[31m-    public function calculateScore(mixed $expected, mixed $actual, string $rawObs = ''): array[m
+[31m-    {[m
+[31m-        $exp = TafCondition::from($expected);[m
+[31m-        $act = TafCondition::from($actual);[m
+[31m-[m
+[31m-        $windDirScore = $this->windDirOk($exp, $act, $rawObs);[m
+[31m-        $windSpeedScore = ($exp->windSpeed !== null && $act->windSpeed !== null && abs($exp->windSpeed - $act->windSpeed) <= 10) ? 1 : 0;[m
+[31m-        $gustScore = ($exp->gust === $act->gust) ? 1 : 0;[m
+[31m-        $visScore = ($exp->visibility !== null && $act->visibility !== null && $this->visibilityClass($exp->visibility) === $this->visibilityClass($act->visibility)) ? 1 : 0;[m
+[31m-        $precipScore = $this->precipOk($exp, $act);[m
+[31m-        $cloudScore = $this->cloudOk($exp, $act);[m
+[31m-[m
+[31m-        if ($exp->ceilingFt === null || $act->ceilingFt === null) {[m
+[31m-            $ceilingScore = 0;[m
+[31m-        } elseif ($exp->ceilingFt < 1000) {[m
+[31m-            $ceilingScore = (abs($exp->ceilingFt - $act->ceilingFt) <= 100) ? 1 : 0;[m
+[31m-        } else {[m
+[31m-            $ceilingScore = (abs($exp->ceilingFt - $act->ceilingFt) <= 0.30 * $exp->ceilingFt) ? 1 : 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        return [[m
+[31m-            'wind_dir' => $windDirScore,[m
+[31m-            'wind_speed' => $windSpeedScore,[m
+[31m-            'gust' => $gustScore,[m
+[31m-            'visibility' => $visScore,[m
+[31m-            'precip' => $precipScore,[m
+[31m-            'cloud' => $cloudScore,[m
+[31m-            'ceiling' => $ceilingScore,[m
+[32m+[m[32m        $baseCondition = $verifier->parseCondition($raw);[m
+[32m+[m[32m        $groups[] = (object) [[m
+[32m+[m[32m            'kind' => 'GENERAL',[m
+[32m+[m[32m            'start' => $validStart->copy(),[m
+[32m+[m[32m            'end' => $validEnd->copy(),[m
+[32m+[m[32m            'condition' => $baseCondition,[m
+[32m+[m[32m            'previous' => null,[m
+         ];[m
+[31m-    }[m
+ [m
+[31m-    public function calculateScoreBecmg(mixed $previous, mixed $target, mixed $actual, string $rawObs = ''): array[m
+[31m-    {[m
+[31m-        $prev = TafCondition::from($previous);[m
+[31m-        $tgt = TafCondition::from($target);[m
+[31m-        $act = TafCondition::from($actual);[m
+[32m+[m[32m        $pattern = '/\b(BECMG|TEMPO|FM\d{6}|PROB30\s+TEMPO|PROB40\s+TEMPO|PROB30|PROB40)\s+([\s\S]*?)(?=\b(?:BECMG|TEMPO|FM\d{6}|PROB30|PROB40)\b|$)/i';[m
+ [m
+[31m-        $windDirScore = 0;[m
+[31m-        if ($prev->windDir !== null && $tgt->windDir !== null && $act->windDir !== null) {[m
+[31m-            $windDirScore = ($this->windDirOk($prev, $act, $rawObs) || $this->windDirOk($tgt, $act, $rawObs)) ? 1 : 0;[m
+[31m-        }[m
+[32m+[m[32m        if (preg_match_all($pattern, $raw, $matches, PREG_SET_ORDER)) {[m
+[32m+[m[32m            $prevCondition = $baseCondition;[m
+ [m
+[31m-        $windSpeedScore = $this->betweenNumber($act->windSpeed, $prev->windSpeed, $tgt->windSpeed) ? 1 : 0;[m
+[31m-        $gustScore = ($act->gust === $prev->gust || $act->gust === $tgt->gust) ? 1 : 0;[m
+[32m+[m[32m            foreach ($matches as $match) {[m
+[32m+[m[32m                $kind = strtoupper(trim($match[1]));[m
+[32m+[m[32m                $groupText = $match[2];[m
+ [m
+[31m-        $visScore = ($this->betweenNumber($act->visibility, $prev->visibility, $tgt->visibility) ||[m
+[31m-            ($act->visibility !== null && in_array($this->visibilityClass($act->visibility), [[m
+[31m-                $this->visibilityClass($prev->visibility),[m
+[31m-                $this->visibilityClass($tgt->visibility)[m
+[31m-            ]))) ? 1 : 0;[m
+[32m+[m[32m                $gStart = $validStart->copy();[m
+[32m+[m[32m                $gEnd = $validEnd->copy();[m
+ [m
+[31m-        $precipScore = ($this->precipOk($prev, $act) || $this->precipOk($tgt, $act)) ? 1 : 0;[m
+[31m-        $cloudScore = $this->cloudAmountBetween($prev, $tgt, $act);[m
+[32m+[m[32m                if (preg_match('/\b(\d{2})(\d{2})\/(\d{2})(\d{2})\b/', $groupText, $tm)) {[m
+[32m+[m[32m                    $gStart = $anchor->copy()->day((int)$tm[1])->setTime((int)$tm[2], 0);[m
+[32m+[m[32m                    $gEnd = $anchor->copy()->day((int)$tm[3])->setTime((int)$tm[4], 0);[m
+[32m+[m[32m                    if ((int)$tm[3] < (int)$tm[1]) $gEnd->addMonth();[m
+[32m+[m[32m                } elseif (preg_match('/^FM(\d{2})(\d{2})(\d{2})/', $kind, $fm)) {[m
+[32m+[m[32m                    $gStart = $anchor->copy()->day((int)$fm[1])->setTime((int)$fm[2], (int)$fm[3]);[m
+[32m+[m[32m                    $kind = 'FM';[m
+[32m+[m[32m                }[m
+ [m
+[31m-        if ($act->ceilingFt === null) {[m
+[31m-            $ceilingScore = 0;[m
+[31m-        } else {[m
+[31m-            $prevScore = $this->calculateScore($prev, $act, $rawObs);[m
+[31m-            $tgtScore = $this->calculateScore($tgt, $act, $rawObs);[m
+[32m+[m[32m                $gCondition = $verifier->parseCondition($groupText);[m
+ [m
+[31m-            $ceilingScore = ($this->betweenNumber($act->ceilingFt, $prev->ceilingFt, $tgt->ceilingFt) ||[m
+[31m-                $prevScore['ceiling'] || $tgtScore['ceiling']) ? 1 : 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        return [[m
+[31m-            'wind_dir' => $windDirScore,[m
+[31m-            'wind_speed' => $windSpeedScore,[m
+[31m-            'gust' => $gustScore,[m
+[31m-            'visibility' => $visScore,[m
+[31m-            'precip' => $precipScore,[m
+[31m-            'cloud' => $cloudScore,[m
+[31m-            'ceiling' => $ceilingScore,[m
+[31m-        ];[m
+[31m-    }[m
+[32m+[m[32m                $groups[] = (object) [[m
+[32m+[m[32m                    'kind' => $kind,[m
+[32m+[m[32m                    'start' => $gStart,[m
+[32m+[m[32m                    'end' => $gEnd,[m
+[32m+[m[32m                    'condition' => $gCondition,[m
+[32m+[m[32m                    'previous' => $prevCondition,[m
+[32m+[m[32m                ];[m
+ [m
+[31m-    public function scoreForTime(mixed $taf, mixed $obs): array[m
+[31m-    {[m
+[31m-        $obsAt = is_array($obs) ? Carbon::parse($obs['at']) : ($obs->at instanceof Carbon ? $obs->at : Carbon::parse($obs->at));[m
+[31m-        $rawObs = is_array($obs) ? ($obs['raw'] ?? '') : ($obs->raw ?? '');[m
+[31m-        $actCondition = is_array($obs) ? ($obs['condition'] ?? $obs) : ($obs->condition ?? $obs);[m
+[31m-[m
+[31m-        $groups = $this->matchingGroups($taf, $obsAt);[m
+[31m-        $group = end($groups);[m
+[31m-[m
+[31m-        $gKind = is_object($group) ? $group->kind : ($group['kind'] ?? 'GENERAL');[m
+[31m-        $gEnd = Carbon::parse(is_object($group) ? $group->end : $group['end']);[m
+[31m-        $gPrev = is_object($group) ? ($group->previous ?? null) : ($group['previous'] ?? null);[m
+[31m-        $gCond = is_object($group) ? $group->condition : $group['condition'];[m
+[31m-[m
+[31m-        $isBecmgActive = ($gKind === 'BECMG' && !empty($gPrev) && $obsAt < $gEnd);[m
+[31m-[m
+[31m-        if ($isBecmgActive) {[m
+[31m-            $scores = $this->calculateScoreBecmg($gPrev, $gCond, $actCondition, $rawObs);[m
+[31m-        } else {[m
+[31m-            $scores = $this->calculateScore($gCond, $actCondition, $rawObs);[m
+[32m+[m[32m                if (in_array($kind, ['GENERAL', 'FM']) || ($kind === 'BECMG' && now() >= $gEnd)) {[m
+[32m+[m[32m                    $prevCondition = $prevCondition->merged($gCondition);[m
+[32m+[m[32m                }[m
+[32m+[m[32m            }[m
+         }[m
+ [m
+[31m-        return [[m
+[31m-            'group' => $group,[m
+[31m-            'scores' => $scores,[m
+[32m+[m[32m        return (object) [[m
+[32m+[m[32m            'raw' => $raw,[m
+[32m+[m[32m            'validStart' => $validStart,[m
+[32m+[m[32m            'validEnd' => $validEnd,[m
+[32m+[m[32m            'groups' => $groups,[m
+         ];[m
+     }[m
+ [m
+[31m-    public function matchingGroups(mixed $taf, Carbon $at): array[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     * Parse METAR / SPECI Raw text menjadi Object Observation[m
+[32m+[m[32m     */[m
+[32m+[m[32m    public static function parseMetar(string $raw, ?Carbon $anchor = null): ?object[m
+     {[m
+[31m-        $validStart = Carbon::parse($taf->validStart ?? $taf['validStart'] ?? $taf->valid_start);[m
+[31m-        $validEnd = Carbon::parse($taf->validEnd ?? $taf['validEnd'] ?? $taf->valid_end);[m
+[31m-        $groups = $taf->groups ?? $taf['groups'] ?? [];[m
+[31m-[m
+[31m-        if ($at < $validStart || $at > $validEnd) {[m
+[31m-            return [$groups[0] ?? $this->makeDefaultGroup($validStart, $validEnd)];[m
+[31m-        }[m
+[31m-[m
+[31m-        $permanent = array_filter($groups, function ($g) use ($at) {[m
+[31m-            $gKind = is_object($g) ? $g->kind : $g['kind'];[m
+[31m-            $gStart = Carbon::parse(is_object($g) ? $g->start : $g['start']);[m
+[31m-            return in_array($gKind, ['GENERAL', 'BECMG', 'FM']) && $gStart <= $at;[m
+[31m-        });[m
+[31m-[m
+[31m-        if (!empty($permanent)) {[m
+[31m-            usort($permanent, function ($a, $b) {[m
+[31m-                $aStart = Carbon::parse(is_object($a) ? $a->start : $a['start']);[m
+[31m-                $bStart = Carbon::parse(is_object($b) ? $b->start : $b['start']);[m
+[31m-                return $aStart <=> $bStart;[m
+[31m-            });[m
+[31m-            $baseGroup = end($permanent);[m
+[31m-        } else {[m
+[31m-            $baseGroup = $groups[0] ?? $this->makeDefaultGroup($validStart, $validEnd);[m
+[31m-        }[m
+[31m-[m
+[31m-        $baseKind = is_object($baseGroup) ? $baseGroup->kind : $baseGroup['kind'];[m
+[31m-        $baseEnd = Carbon::parse(is_object($baseGroup) ? $baseGroup->end : $baseGroup['end']);[m
+[31m-[m
+[31m-        if ($baseKind === 'BECMG' && $at < $baseEnd) {[m
+[31m-            $base = $baseGroup;[m
+[31m-        } else {[m
+[31m-            $kind = ($baseKind === 'GENERAL') ? 'GENERAL' : $baseKind;[m
+[31m-            $start = Carbon::parse(is_object($baseGroup) ? $baseGroup->start : $baseGroup['start']);[m
+[31m-            $condition = is_object($baseGroup) ? $baseGroup->condition : $baseGroup['condition'];[m
+[31m-            $previous = is_object($baseGroup) ? ($baseGroup->previous ?? null) : ($baseGroup['previous'] ?? null);[m
+[31m-[m
+[31m-            $base = (object) [[m
+[31m-                'kind' => $kind,[m
+[31m-                'start' => $start,[m
+[31m-                'end' => $validEnd,[m
+[31m-                'condition' => $condition,[m
+[31m-                'previous' => $previous,[m
+[31m-            ];[m
+[31m-        }[m
+[31m-[m
+[31m-        $transient = array_filter($groups, function ($g) use ($at) {[m
+[31m-            $gKind = is_object($g) ? $g->kind : $g['kind'];[m
+[31m-            $gStart = Carbon::parse(is_object($g) ? $g->start : $g['start']);[m
+[31m-            $gEnd = Carbon::parse(is_object($g) ? $g->end : $g['end']);[m
+[31m-[m
+[31m-            return in_array($gKind, ['TEMPO', 'PROB30 TEMPO', 'PROB40 TEMPO', 'PROB30', 'PROB40', 'INTER'])[m
+[31m-                && ($gStart <= $at && $at < $gEnd);[m
+[31m-        });[m
+[31m-[m
+[31m-        if (!empty($transient)) {[m
+[31m-            usort($transient, function ($a, $b) {[m
+[31m-                $aStart = Carbon::parse(is_object($a) ? $a->start : $a['start']);[m
+[31m-                $bStart = Carbon::parse(is_object($b) ? $b->start : $b['start']);[m
+[31m-                return $aStart <=> $bStart;[m
+[31m-            });[m
+[31m-            return [$base, end($transient)];[m
+[31m-        }[m
+[32m+[m[32m        $anchor = $anchor ?? now();[m
+[32m+[m[32m        $raw = trim(preg_replace('/\s+/', ' ', $raw));[m
+[32m+[m[32m        if (empty($raw)) return null;[m
+ [m
+[31m-        return [$base];[m
+[31m-    }[m
+[31m-[m
+[31m-    private function windDirOk(TafCondition $expected, TafCondition $actual, string $raw): int[m
+[31m-    {[m
+[31m-        if ($expected->windDir === null || $actual->windDir === null) return 0;[m
+[31m-        if ($expected->windDir === 999 && $actual->windDir === 999) return 1;[m
+[31m-[m
+[31m-        if ($expected->windDir === 999) {[m
+[31m-            return ($actual->windSpeed < 10 || str_contains($raw, 'TS') || str_contains($raw, 'CB')) ? 1 : 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        if ($actual->windDir === 999) {[m
+[31m-            return ($expected->windSpeed < 10 && $actual->windSpeed < 10) ? 1 : 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        $delta = abs($expected->windDir - $actual->windDir);[m
+[31m-        $delta = min($delta, 360 - $delta);[m
+[31m-[m
+[31m-        if ($delta <= 60) return 1;[m
+[31m-[m
+[31m-        return ($actual->windSpeed < 10) ? 1 : 0;[m
+[31m-    }[m
+[31m-[m
+[31m-    private function cloudOk(TafCondition $expected, TafCondition $actual): int[m
+[31m-    {[m
+[31m-        if ($actual->ceilingFt !== null && $actual->ceilingFt > 4921) {[m
+[31m-            return 1;[m
+[31m-        }[m
+[31m-[m
+[31m-        if (!$expected->cloud || !$actual->cloud) return 0;[m
+[31m-[m
+[31m-        $low = ['SKC', 'FEW', 'SCT'];[m
+[31m-        $high = ['BKN', 'OVC'];[m
+[31m-[m
+[31m-        $eLow = in_array($expected->cloud, $low);[m
+[31m-        $aLow = in_array($actual->cloud, $low);[m
+[31m-        $eHigh = in_array($expected->cloud, $high);[m
+[31m-        $aHigh = in_array($actual->cloud, $high);[m
+[31m-[m
+[31m-        return (($eLow && $aLow) || ($eHigh && $aHigh)) ? 1 : 0;[m
+[31m-    }[m
+[31m-[m
+[31m-    private function rainClass(?string $code): string[m
+[31m-    {[m
+[31m-        if (!$code || $code === 'NONE') return 'NONE';[m
+[31m-        $code = strtoupper($code);[m
+[31m-        if (str_starts_with($code, '+')) return 'HEAVY';[m
+[31m-        if (str_starts_with($code, '-')) return 'LIGHT';[m
+[31m-        return 'MODERATE';[m
+[31m-    }[m
+[31m-[m
+[31m-    private function precipOk(TafCondition $expected, TafCondition $actual): int[m
+[31m-    {[m
+[31m-        $e = $this->rainClass($expected->precipCode);[m
+[31m-        $a = $this->rainClass($actual->precipCode);[m
+[31m-[m
+[31m-        if ($e === 'HEAVY') return ($a === 'HEAVY') ? 1 : 0;[m
+[31m-        if ($e === 'MODERATE') return in_array($a, ['MODERATE', 'HEAVY']) ? 1 : 0;[m
+[31m-[m
+[31m-        return in_array($a, ['NONE', 'LIGHT']) ? 1 : 0;[m
+[31m-    }[m
+[31m-[m
+[31m-    private function cloudAmountBetween(TafCondition $previous, TafCondition $target, TafCondition $actual): int[m
+[31m-    {[m
+[31m-        $order = ['SKC' => 0, 'FEW' => 1, 'SCT' => 2, 'BKN' => 3, 'OVC' => 4];[m
+[32m+[m[32m        $verifier = app(TafVerifierService::class);[m
+[32m+[m[32m        $obsAt = $anchor->copy();[m
+ [m
+[31m-        if (!isset($order[$previous->cloud], $order[$target->cloud], $order[$actual->cloud])) {[m
+[31m-            return 0;[m
+[32m+[m[32m        if (preg_match('/\b(\d{2})(\d{2})(\d{2})Z\b/i', $raw, $m)) {[m
+[32m+[m[32m            $day = (int)$m[1];[m
+[32m+[m[32m            $hour = (int)$m[2];[m
+[32m+[m[32m            $min = (int)$m[3];[m
+[32m+[m[32m            $obsAt = $anchor->copy()->day($day)->setTime($hour, $min, 0);[m
+         }[m
+ [m
+[31m-        $lo = min($order[$previous->cloud], $order[$target->cloud]);[m
+[31m-        $hi = max($order[$previous->cloud], $order[$target->cloud]);[m
+[31m-        $actVal = $order[$actual->cloud];[m
+[32m+[m[32m        $condition = $verifier->parseCondition($raw);[m
+ [m
+[31m-        return ($actVal >= $lo && $actVal <= $hi) ? 1 : 0;[m
+[32m+[m[32m        return (object) [[m
+[32m+[m[32m            'raw' => $raw,[m
+[32m+[m[32m            'at' => $obsAt,[m
+[32m+[m[32m            'condition' => $condition,[m
+[32m+[m[32m        ];[m
+     }[m
+ [m
+[31m-    private function betweenNumber(?int $value, ?int $a, ?int $b): bool[m
+[32m+[m[32m    public static function parseObservation(string $raw, ?Carbon $anchor = null): ?object[m
+     {[m
+[31m-        if ($value === null || $a === null || $b === null) return false;[m
+[31m-        $lo = min($a, $b);[m
+[31m-        $hi = max($a, $b);[m
+[31m-        return ($value >= $lo && $value <= $hi);[m
+[32m+[m[32m        return self::parseMetar($raw, $anchor);[m
+     }[m
+ [m
+[31m-    private function makeDefaultGroup(Carbon $start, Carbon $end): object[m
+[32m+[m[32m    public function parseCondition(string $text): TafCondition[m
+     {[m
+[31m-        return (object) [[m
+[31m-            'kind' => 'GENERAL',[m
+[31m-            'start' => $start,[m
+[31m-            'end' => $end,[m
+[31m-            'condition' => new TafCondition(),[m
+[31m-            'previous' => null,[m
+[31m-        ];[m
+[32m+[m[32m        $verifier = app(TafVerifierService::class);[m
+[32m+[m[32m        return $verifier->parseCondition($text);[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/Services/TafVerifierService.php b/app/Services/TafVerifierService.php[m
+[1mindex 363c1e2..96ba4c3 100644[m
+[1m--- a/app/Services/TafVerifierService.php[m
+[1m+++ b/app/Services/TafVerifierService.php[m
+[36m@@ -2,13 +2,121 @@[m
+ [m
+ namespace App\Services;[m
+ [m
+[31m-use App\DTOs\Taf\Condition;[m
+[31m-use App\DTOs\Taf\Group;[m
+[31m-use App\DTOs\Taf\TafData;[m
+[31m-use DateTimeInterface;[m
+[32m+[m[32muse Carbon\Carbon;[m
+[32m+[m
+[32m+[m[32mclass TafCondition[m
+[32m+[m[32m{[m
+[32m+[m[32m    public ?int $windDir = null;[m
+[32m+[m[32m    public ?int $windSpeed = null;[m
+[32m+[m[32m    public ?bool $gust = false;[m
+[32m+[m[32m    public ?int $visibility = null;[m
+[32m+[m[32m    public ?string $precipCode = 'NONE';[m
+[32m+[m[32m    public ?string $cloud = null;[m
+[32m+[m[32m    public ?int $ceilingFt = null;[m
+[32m+[m
+[32m+[m[32m    public function merged(TafCondition $newer): TafCondition[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $out = clone $this;[m
+[32m+[m[32m        if ($newer->windDir !== null) $out->windDir = $newer->windDir;[m
+[32m+[m[32m        if ($newer->windSpeed !== null) $out->windSpeed = $newer->windSpeed;[m
+[32m+[m[32m        if ($newer->gust !== null) $out->gust = $newer->gust;[m
+[32m+[m[32m        if ($newer->visibility !== null) $out->visibility = $newer->visibility;[m
+[32m+[m[32m        if ($newer->precipCode !== null && $newer->precipCode !== '') $out->precipCode = $newer->precipCode;[m
+[32m+[m[32m        if ($newer->cloud !== null && $newer->cloud !== '') $out->cloud = $newer->cloud;[m
+[32m+[m[32m        if ($newer->ceilingFt !== null) $out->ceilingFt = $newer->ceilingFt;[m
+[32m+[m
+[32m+[m[32m        return $out;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public static function from(mixed $data): TafCondition[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if ($data instanceof TafCondition) {[m
+[32m+[m[32m            return $data;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $c = new TafCondition();[m
+[32m+[m[32m        if (is_array($data)) {[m
+[32m+[m[32m            $c->windDir = $data['wind_dir'] ?? $data['windDir'] ?? null;[m
+[32m+[m[32m            $c->windSpeed = $data['wind_speed'] ?? $data['windSpeed'] ?? null;[m
+[32m+[m[32m            $c->gust = $data['gust'] ?? false;[m
+[32m+[m[32m            $c->visibility = $data['visibility'] ?? null;[m
+[32m+[m[32m            $c->precipCode = $data['precip_code'] ?? $data['precipCode'] ?? 'NONE';[m
+[32m+[m[32m            $c->cloud = $data['cloud'] ?? null;[m
+[32m+[m[32m            $c->ceilingFt = $data['ceiling_ft'] ?? $data['ceilingFt'] ?? null;[m
+[32m+[m[32m        } elseif (is_object($data)) {[m
+[32m+[m[32m            $c->windDir = $data->wind_dir ?? $data->windDir ?? null;[m
+[32m+[m[32m            $c->windSpeed = $data->wind_speed ?? $data->windSpeed ?? null;[m
+[32m+[m[32m            $c->gust = $data->gust ?? false;[m
+[32m+[m[32m            $c->visibility = $data->visibility ?? null;[m
+[32m+[m[32m            $c->precipCode = $data->precip_code ?? $data->precipCode ?? 'NONE';[m
+[32m+[m[32m            $c->cloud = $data->cloud ?? null;[m
+[32m+[m[32m            $c->ceilingFt = $data->ceiling_ft ?? $data->ceilingFt ?? null;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return $c;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function toArray(): array[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return [[m
+[32m+[m[32m            'wind_dir' => $this->windDir,[m
+[32m+[m[32m            'wind_speed' => $this->windSpeed,[m
+[32m+[m[32m            'gust' => $this->gust,[m
+[32m+[m[32m            'visibility' => $this->visibility,[m
+[32m+[m[32m            'precip_code' => $this->precipCode,[m
+[32m+[m[32m            'cloud' => $this->cloud,[m
+[32m+[m[32m            'ceiling_ft' => $this->ceilingFt,[m
+[32m+[m[32m        ];[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+ [m
+ class TafVerifierService[m
+ {[m
+[32m+[m[32m    public function parseCondition(string $text): TafCondition[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $c = new TafCondition();[m
+[32m+[m
+[32m+[m[32m        if (preg_match('/\b(VRB|\d{3})(\d{2,3})(G\d{2,3})?KT\b/i', $text, $wind)) {[m
+[32m+[m[32m            $c->windDir = (strtoupper($wind[1]) === 'VRB') ? 999 : (int) $wind[1];[m
+[32m+[m[32m            $c->windSpeed = (int) $wind[2];[m
+[32m+[m[32m            $c->gust = !empty($wind[3]);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if (preg_match('/\bCAVOK\b/i', $text)) {[m
+[32m+[m[32m            $c->visibility = 9999;[m
+[32m+[m[32m            $c->cloud = 'SKC';[m
+[32m+[m[32m            $c->ceilingFt = 9999;[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            if (preg_match('/(?:^|\s)(\d{4})(?:\s|$)/', $text, $vis)) {[m
+[32m+[m[32m                $c->visibility = (int) $vis[1];[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            if (preg_match_all('/\b(FEW|SCT|BKN|OVC)(\d{3})(?:CB|TCU)?\b/i', $text, $matches, PREG_SET_ORDER)) {[m
+[32m+[m[32m                usort($matches, fn($a, $b) => (int) $a[2] <=> (int) $b[2]);[m
+[32m+[m[32m                $c->cloud = strtoupper($matches[0][1]);[m
+[32m+[m[32m                $c->ceilingFt = ((int) $matches[0][2]) * 100;[m
+[32m+[m[32m            } elseif (preg_match('/\b(NSC|NCD|SKC)\b/i', $text)) {[m
+[32m+[m[32m                $c->cloud = 'SKC';[m
+[32m+[m[32m                $c->ceilingFt = 9999;[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if (preg_match_all('/(?<![A-Z0-9])([+-]?(?:SH)?(?:RA|DZ|SN|SG|PL|GR|GS))(?![A-Z0-9])/i', $text, $wxMatches)) {[m
+[32m+[m[32m            $rainTokens = array_values(array_filter($wxMatches[1], fn($w) => str_ends_with(strtoupper($w), 'RA')));[m
+[32m+[m[32m            if (!empty($rainTokens)) {[m
+[32m+[m[32m                $c->precipCode = strtoupper($rainTokens[0]);[m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                $c->precipCode = 'NONE';[m
+[32m+[m[32m            }[m
+[32m+[m[32m        } elseif (preg_match('/\bNSW\b/i', $text)) {[m
+[32m+[m[32m            $c->precipCode = 'NONE';[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            $c->precipCode = 'NONE';[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return $c;[m
+[32m+[m[32m    }[m
+[32m+[m
+     public function visibilityClass(?int $v): ?int[m
+     {[m
+         if ($v === null) return null;[m
+[36m@@ -19,102 +127,268 @@[m [mpublic function visibilityClass(?int $v): ?int[m
+         return 5;[m
+     }[m
+ [m
+[31m-    public function rainClass(?string $code): string[m
+[32m+[m[32m    public function calculateScore(mixed $expected, mixed $actual, string $rawObs = ''): array[m
+     {[m
+[31m-        if (!$code || $code === 'NONE') return 'NONE';[m
+[31m-        $code = strtoupper($code);[m
+[31m-        if (str_starts_with($code, '+')) return 'HEAVY';[m
+[31m-        if (str_starts_with($code, '-')) return 'LIGHT';[m
+[31m-        return 'MODERATE';[m
+[32m+[m[32m        $exp = TafCondition::from($expected);[m
+[32m+[m[32m        $act = TafCondition::from($actual);[m
+[32m+[m
+[32m+[m[32m        $windDirScore = $this->windDirOk($exp, $act, $rawObs);[m
+[32m+[m[32m        $windSpeedScore = ($exp->windSpeed !== null && $act->windSpeed !== null && abs($exp->windSpeed - $act->windSpeed) <= 10) ? 1 : 0;[m
+[32m+[m[32m        $gustScore = ($exp->gust === $act->gust) ? 1 : 0;[m
+[32m+[m[32m        $visScore = ($exp->visibility !== null && $act->visibility !== null && $this->visibilityClass($exp->visibility) === $this->visibilityClass($act->visibility)) ? 1 : 0;[m
+[32m+[m[32m        $precipScore = $this->precipOk($exp, $act);[m
+[32m+[m[32m        $cloudScore = $this->cloudOk($exp, $act);[m
+[32m+[m
+[32m+[m[32m        if ($exp->ceilingFt === null || $act->ceilingFt === null) {[m
+[32m+[m[32m            $ceilingScore = 0;[m
+[32m+[m[32m        } elseif ($exp->ceilingFt < 1000) {[m
+[32m+[m[32m            $ceilingScore = (abs($exp->ceilingFt - $act->ceilingFt) <= 100) ? 1 : 0;[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            $ceilingScore = (abs($exp->ceilingFt - $act->ceilingFt) <= 0.30 * $exp->ceilingFt) ? 1 : 0;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return [[m
+[32m+[m[32m            'wind_dir' => $windDirScore,[m
+[32m+[m[32m            'wind_speed' => $windSpeedScore,[m
+[32m+[m[32m            'gust' => $gustScore,[m
+[32m+[m[32m            'visibility' => $visScore,[m
+[32m+[m[32m            'precip' => $precipScore,[m
+[32m+[m[32m            'cloud' => $cloudScore,[m
+[32m+[m[32m            'ceiling' => $ceilingScore,[m
+[32m+[m[32m        ];[m
+     }[m
+ [m
+[31m-    public function calculateScore(Condition $expected, Condition $actual, string $rawMetar): array[m
+[32m+[m[32m    public function calculateScoreBecmg(mixed $previous, mixed $target, mixed $actual, string $rawObs = ''): array[m
+     {[m
+[31m-        // 1. Wind Direction[m
+[31m-        $windDir = 0;[m
+[31m-        if ($expected->windDir !== null && $actual->windDir !== null) {[m
+[31m-            if ($expected->windDir === 999 && $actual->windDir === 999) {[m
+[31m-                $windDir = 1;[m
+[31m-            } elseif ($expected->windDir === 999) {[m
+[31m-                $windDir = (($actual->windSpeed ?? 999) < 10 || str_contains($rawMetar, 'TS') || str_contains($rawMetar, 'CB')) ? 1 : 0;[m
+[31m-            } elseif ($actual->windDir === 999) {[m
+[31m-                $windDir = (($expected->windSpeed ?? 999) < 10 && ($actual->windSpeed ?? 999) < 10) ? 1 : 0;[m
+[31m-            } else {[m
+[31m-                $delta = abs($expected->windDir - $actual->windDir);[m
+[31m-                $delta = min($delta, 360 - $delta);[m
+[31m-                $windDir = ($delta <= 60 || ($actual->windSpeed ?? 999) < 10) ? 1 : 0;[m
+[31m-            }[m
+[32m+[m[32m        $prev = TafCondition::from($previous);[m
+[32m+[m[32m        $tgt = TafCondition::from($target);[m
+[32m+[m[32m        $act = TafCondition::from($actual);[m
+[32m+[m
+[32m+[m[32m        $windDirScore = 0;[m
+[32m+[m[32m        if ($prev->windDir !== null && $tgt->windDir !== null && $act->windDir !== null) {[m
+[32m+[m[32m            $windDirScore = ($this->windDirOk($prev, $act, $rawObs) || $this->windDirOk($tgt, $act, $rawObs)) ? 1 : 0;[m
+         }[m
+ [m
+[31m-        // 2. Wind Speed[m
+[31m-        $windSpeed = ($expected->windSpeed !== null && $actual->windSpeed !== null && abs($expected->windSpeed - $actual->windSpeed) <= 10) ? 1 : 0;[m
+[31m-[m
+[31m-        // 3. Gust[m
+[31m-        $gust = ($expected->gust === $actual->gust) ? 1 : 0;[m
+[31m-[m
+[31m-        // 4. Visibility[m
+[31m-        $vis = ($expected->visibility !== null && $actual->visibility !== null && $this->visibilityClass($expected->visibility) === $this->visibilityClass($actual->visibility)) ? 1 : 0;[m
+[31m-[m
+[31m-        // 5. Precipitation[m
+[31m-        $eRain = $this->rainClass($expected->precipCode);[m
+[31m-        $aRain = $this->rainClass($actual->precipCode);[m
+[31m-        $precip = match ($eRain) {[m
+[31m-            'HEAVY' => ($aRain === 'HEAVY') ? 1 : 0,[m
+[31m-            'MODERATE' => in_array($aRain, ['MODERATE', 'HEAVY']) ? 1 : 0,[m
+[31m-            default => in_array($aRain, ['NONE', 'LIGHT']) ? 1 : 0,[m
+[31m-        };[m
+[31m-[m
+[31m-        // 6. Cloud Amount[m
+[31m-        $cloud = 0;[m
+[31m-        if (($actual->ceilingFt ?? 0) > 4921) {[m
+[31m-            $cloud = 1;[m
+[31m-        } elseif ($expected->cloud && $actual->cloud) {[m
+[31m-            $low = ['SKC', 'FEW', 'SCT'];[m
+[31m-            $high = ['BKN', 'OVC'];[m
+[31m-            $cloud = ((in_array($expected->cloud, $low) && in_array($actual->cloud, $low)) ||[m
+[31m-                      (in_array($expected->cloud, $high) && in_array($actual->cloud, $high))) ? 1 : 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        // 7. Ceiling Base[m
+[31m-        if ($expected->ceilingFt === null || $actual->ceilingFt === null) {[m
+[31m-            $ceiling = 0;[m
+[31m-        } elseif ($expected->ceilingFt < 1000) {[m
+[31m-            $ceiling = (abs($expected->ceilingFt - $actual->ceilingFt) <= 100) ? 1 : 0;[m
+[32m+[m[32m        $windSpeedScore = $this->betweenNumber($act->windSpeed, $prev->windSpeed, $tgt->windSpeed) ? 1 : 0;[m
+[32m+[m[32m        $gustScore = ($act->gust === $prev->gust || $act->gust === $tgt->gust) ? 1 : 0;[m
+[32m+[m
+[32m+[m[32m        $visScore = ($this->betweenNumber($act->visibility, $prev->visibility, $tgt->visibility) ||[m
+[32m+[m[32m            ($act->visibility !== null && in_array($this->visibilityClass($act->visibility), [[m
+[32m+[m[32m                $this->visibilityClass($prev->visibility),[m
+[32m+[m[32m                $this->visibilityClass($tgt->visibility)[m
+[32m+[m[32m            ]))) ? 1 : 0;[m
+[32m+[m
+[32m+[m[32m        $precipScore = ($this->precipOk($prev, $act) || $this->precipOk($tgt, $act)) ? 1 : 0;[m
+[32m+[m[32m        $cloudScore = $this->cloudAmountBetween($prev, $tgt, $act);[m
+[32m+[m
+[32m+[m[32m        if ($act->ceilingFt === null) {[m
+[32m+[m[32m            $ceilingScore = 0;[m
+         } else {[m
+[31m-            $ceiling = (abs($expected->ceilingFt - $actual->ceilingFt) <= 0.30 * $expected->ceilingFt) ? 1 : 0;[m
+[32m+[m[32m            $prevScore = $this->calculateScore($prev, $act, $rawObs);[m
+[32m+[m[32m            $tgtScore = $this->calculateScore($tgt, $act, $rawObs);[m
+[32m+[m
+[32m+[m[32m            $ceilingScore = ($this->betweenNumber($act->ceilingFt, $prev->ceilingFt, $tgt->ceilingFt) ||[m
+[32m+[m[32m                $prevScore['ceiling'] || $tgtScore['ceiling']) ? 1 : 0;[m
+         }[m
+ [m
+         return [[m
+[31m-            'wind_dir' => $windDir,[m
+[31m-            'wind_speed' => $windSpeed,[m
+[31m-            'gust' => $gust,[m
+[31m-            'visibility' => $vis,[m
+[31m-            'precip' => $precip,[m
+[31m-            'cloud' => $cloud,[m
+[31m-            'ceiling' => $ceiling,[m
+[32m+[m[32m            'wind_dir' => $windDirScore,[m
+[32m+[m[32m            'wind_speed' => $windSpeedScore,[m
+[32m+[m[32m            'gust' => $gustScore,[m
+[32m+[m[32m            'visibility' => $visScore,[m
+[32m+[m[32m            'precip' => $precipScore,[m
+[32m+[m[32m            'cloud' => $cloudScore,[m
+[32m+[m[32m            'ceiling' => $ceilingScore,[m
+         ];[m
+     }[m
+ [m
+[31m-    public function matchingGroups(TafData $taf, DateTimeInterface $at): array[m
+[32m+[m[32m    public function scoreForTime(mixed $taf, mixed $obs): array[m
+     {[m
+[31m-        if ($at < $taf->validStart || $at > $taf->validEnd) {[m
+[31m-            return [$taf->groups[0]];[m
+[32m+[m[32m        $obsAt = is_array($obs) ? Carbon::parse($obs['at']) : ($obs->at instanceof Carbon ? $obs->at : Carbon::parse($obs->at));[m
+[32m+[m[32m        $rawObs = is_array($obs) ? ($obs['raw'] ?? '') : ($obs->raw ?? '');[m
+[32m+[m[32m        $actCondition = is_array($obs) ? ($obs['condition'] ?? $obs) : ($obs->condition ?? $obs);[m
+[32m+[m
+[32m+[m[32m        $groups = $this->matchingGroups($taf, $obsAt);[m
+[32m+[m[32m        $group = end($groups);[m
+[32m+[m
+[32m+[m[32m        $gKind = is_object($group) ? $group->kind : ($group['kind'] ?? 'GENERAL');[m
+[32m+[m[32m        $gEnd = Carbon::parse(is_object($group) ? $group->end : $group['end']);[m
+[32m+[m[32m        $gPrev = is_object($group) ? ($group->previous ?? null) : ($group['previous'] ?? null);[m
+[32m+[m[32m        $gCond = is_object($group) ? $group->condition : $group['condition'];[m
+[32m+[m
+[32m+[m[32m        $isBecmgActive = ($gKind === 'BECMG' && !empty($gPrev) && $obsAt < $gEnd);[m
+[32m+[m
+[32m+[m[32m        if ($isBecmgActive) {[m
+[32m+[m[32m            $scores = $this->calculateScoreBecmg($gPrev, $gCond, $actCondition, $rawObs);[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            $scores = $this->calculateScore($gCond, $actCondition, $rawObs);[m
+         }[m
+ [m
+[31m-        $permanent = array_filter($taf->groups, fn($g) => in_array($g->kind, ['GENERAL', 'BECMG', 'FM']) && $g->start <= $at);[m
+[31m-        usort($permanent, fn($a, $b) => $b->start <=> $a->start);[m
+[31m-        $baseGroup = !empty($permanent) ? array_values($permanent)[0] : $taf->groups[0];[m
+[32m+[m[32m        return [[m
+[32m+[m[32m            'group' => $group,[m
+[32m+[m[32m            'scores' => $scores,[m
+[32m+[m[32m        ];[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function matchingGroups(mixed $taf, Carbon $at): array[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $validStart = Carbon::parse($taf->validStart ?? $taf['validStart'] ?? $taf->valid_start);[m
+[32m+[m[32m        $validEnd = Carbon::parse($taf->validEnd ?? $taf['validEnd'] ?? $taf->valid_end);[m
+[32m+[m[32m        $groups = $taf->groups ?? $taf['groups'] ?? [];[m
+[32m+[m
+[32m+[m[32m        if ($at < $validStart || $at > $validEnd) {[m
+[32m+[m[32m            return [$groups[0] ?? $this->makeDefaultGroup($validStart, $validEnd)];[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $permanent = array_filter($groups, function ($g) use ($at) {[m
+[32m+[m[32m            $gKind = is_object($g) ? $g->kind : $g['kind'];[m
+[32m+[m[32m            $gStart = Carbon::parse(is_object($g) ? $g->start : $g['start']);[m
+[32m+[m[32m            return in_array($gKind, ['GENERAL', 'BECMG', 'FM']) && $gStart <= $at;[m
+[32m+[m[32m        });[m
+[32m+[m
+[32m+[m[32m        if (!empty($permanent)) {[m
+[32m+[m[32m            usort($permanent, function ($a, $b) {[m
+[32m+[m[32m                $aStart = Carbon::parse(is_object($a) ? $a->start : $a['start']);[m
+[32m+[m[32m                $bStart = Carbon::parse(is_object($b) ? $b->start : $b['start']);[m
+[32m+[m[32m                return $aStart <=> $bStart;[m
+[32m+[m[32m            });[m
+[32m+[m[32m            $baseGroup = end($permanent);[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            $baseGroup = $groups[0] ?? $this->makeDefaultGroup($validStart, $validEnd);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $baseKind = is_object($baseGroup) ? $baseGroup->kind : $baseGroup['kind'];[m
+[32m+[m[32m        $baseEnd = Carbon::parse(is_object($baseGroup) ? $baseGroup->end : $baseGroup['end']);[m
+[32m+[m
+[32m+[m[32m        if ($baseKind === 'BECMG' && $at < $baseEnd) {[m
+[32m+[m[32m            $base = $baseGroup;[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            $kind = ($baseKind === 'GENERAL') ? 'GENERAL' : $baseKind;[m
+[32m+[m[32m            $start = Carbon::parse(is_object($baseGroup) ? $baseGroup->start : $baseGroup['start']);[m
+[32m+[m[32m            $condition = is_object($baseGroup) ? $baseGroup->condition : $baseGroup['condition'];[m
+[32m+[m[32m            $previous = is_object($baseGroup) ? ($baseGroup->previous ?? null) : ($baseGroup['previous'] ?? null);[m
+[32m+[m
+[32m+[m[32m            $base = (object) [[m
+[32m+[m[32m                'kind' => $kind,[m
+[32m+[m[32m                'start' => $start,[m
+[32m+[m[32m                'end' => $validEnd,[m
+[32m+[m[32m                'condition' => $condition,[m
+[32m+[m[32m                'previous' => $previous,[m
+[32m+[m[32m            ];[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $transient = array_filter($groups, function ($g) use ($at) {[m
+[32m+[m[32m            $gKind = is_object($g) ? $g->kind : $g['kind'];[m
+[32m+[m[32m            $gStart = Carbon::parse(is_object($g) ? $g->start : $g['start']);[m
+[32m+[m[32m            $gEnd = Carbon::parse(is_object($g) ? $g->end : $g['end']);[m
+ [m
+[31m-        $base = ($baseGroup->kind === 'BECMG' && $at < $baseGroup->end)[m
+[31m-            ? $baseGroup[m
+[31m-            : new Group($baseGroup->kind === 'GENERAL' ? 'GENERAL' : $baseGroup->kind, $baseGroup->start, $taf->validEnd, $baseGroup->condition, $baseGroup->previous);[m
+[32m+[m[32m            return in_array($gKind, ['TEMPO', 'PROB30 TEMPO', 'PROB40 TEMPO', 'PROB30', 'PROB40', 'INTER'])[m
+[32m+[m[32m                && ($gStart <= $at && $at < $gEnd);[m
+[32m+[m[32m        });[m
+ [m
+[31m-        $transient = array_filter($taf->groups, fn($g) => in_array($g->kind, ['TEMPO', 'PROB30 TEMPO', 'PROB40 TEMPO', 'PROB30', 'PROB40', 'INTER']) && $g->start <= $at && $at < $g->end);[m
+         if (!empty($transient)) {[m
+[31m-            usort($transient, fn($a, $b) => $b->start <=> $a->start);[m
+[31m-            return [$base, array_values($transient)[0]];[m
+[32m+[m[32m            usort($transient, function ($a, $b) {[m
+[32m+[m[32m                $aStart = Carbon::parse(is_object($a) ? $a->start : $a['start']);[m
+[32m+[m[32m                $bStart = Carbon::parse(is_object($b) ? $b->start : $b['start']);[m
+[32m+[m[32m                return $aStart <=> $bStart;[m
+[32m+[m[32m            });[m
+[32m+[m[32m            return [$base, end($transient)];[m
+         }[m
+ [m
+         return [$base];[m
+     }[m
+[32m+[m
+[32m+[m[32m    private function windDirOk(TafCondition $expected, TafCondition $actual, string $raw): int[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if ($expected->windDir === null || $actual->windDir === null) return 0;[m
+[32m+[m[32m        if ($expected->windDir === 999 && $actual->windDir === 999) return 1;[m
+[32m+[m
+[32m+[m[32m        if ($expected->windDir === 999) {[m
+[32m+[m[32m            return ($actual->windSpeed < 10 || str_contains($raw, 'TS') || str_contains($raw, 'CB')) ? 1 : 0;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if ($actual->windDir === 999) {[m
+[32m+[m[32m            return ($expected->windSpeed < 10 && $actual->windSpeed < 10) ? 1 : 0;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $delta = abs($expected->windDir - $actual->windDir);[m
+[32m+[m[32m        $delta = min($delta, 360 - $delta);[m
+[32m+[m
+[32m+[m[32m        if ($delta <= 60) return 1;[m
+[32m+[m
+[32m+[m[32m        return ($actual->windSpeed < 10) ? 1 : 0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function cloudOk(TafCondition $expected, TafCondition $actual): int[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if ($actual->ceilingFt !== null && $actual->ceilingFt > 4921) {[m
+[32m+[m[32m            return 1;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if (!$expected->cloud || !$actual->cloud) return 0;[m
+[32m+[m
+[32m+[m[32m        $low = ['SKC', 'FEW', 'SCT'];[m
+[32m+[m[32m        $high = ['BKN', 'OVC'];[m
+[32m+[m
+[32m+[m[32m        $eLow = in_array($expected->cloud, $low);[m
+[32m+[m[32m        $aLow = in_array($actual->cloud, $low);[m
+[32m+[m[32m        $eHigh = in_array($expected->cloud, $high);[m
+[32m+[m[32m        $aHigh = in_array($actual->cloud, $high);[m
+[32m+[m
+[32m+[m[32m        return (($eLow && $aLow) || ($eHigh && $aHigh)) ? 1 : 0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function rainClass(?string $code): string[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (!$code || $code === 'NONE') return 'NONE';[m
+[32m+[m[32m        $code = strtoupper($code);[m
+[32m+[m[32m        if (str_starts_with($code, '+')) return 'HEAVY';[m
+[32m+[m[32m        if (str_starts_with($code, '-')) return 'LIGHT';[m
+[32m+[m[32m        return 'MODERATE';[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function precipOk(TafCondition $expected, TafCondition $actual): int[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $e = $this->rainClass($expected->precipCode);[m
+[32m+[m[32m        $a = $this->rainClass($actual->precipCode);[m
+[32m+[m
+[32m+[m[32m        if ($e === 'HEAVY') return ($a === 'HEAVY') ? 1 : 0;[m
+[32m+[m[32m        if ($e === 'MODERATE') return in_array($a, ['MODERATE', 'HEAVY']) ? 1 : 0;[m
+[32m+[m
+[32m+[m[32m        return in_array($a, ['NONE', 'LIGHT']) ? 1 : 0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function cloudAmountBetween(TafCondition $previous, TafCondition $target, TafCondition $actual): int[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $order = ['SKC' => 0, 'FEW' => 1, 'SCT' => 2, 'BKN' => 3, 'OVC' => 4];[m
+[32m+[m
+[32m+[m[32m        if (!isset($order[$previous->cloud], $order[$target->cloud], $order[$actual->cloud])) {[m
+[32m+[m[32m            return 0;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $lo = min($order[$previous->cloud], $order[$target->cloud]);[m
+[32m+[m[32m        $hi = max($order[$previous->cloud], $order[$target->cloud]);[m
+[32m+[m[32m        $actVal = $order[$actual->cloud];[m
+[32m+[m
+[32m+[m[32m        return ($actVal >= $lo && $actVal <= $hi) ? 1 : 0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function betweenNumber(?int $value, ?int $a, ?int $b): bool[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if ($value === null || $a === null || $b === null) return false;[m
+[32m+[m[32m        $lo = min($a, $b);[m
+[32m+[m[32m        $hi = max($a, $b);[m
+[32m+[m[32m        return ($value >= $lo && $value <= $hi);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private function makeDefaultGroup(Carbon $start, Carbon $end): object[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return (object) [[m
+[32m+[m[32m            'kind' => 'GENERAL',[m
+[32m+[m[32m            'start' => $start,[m
+[32m+[m[32m            'end' => $end,[m
+[32m+[m[32m            'condition' => new TafCondition(),[m
+[32m+[m[32m            'previous' => null,[m
+[32m+[m[32m        ];[m
+[32m+[m[32m    }[m
+ }[m
+\ No newline at end of file[m

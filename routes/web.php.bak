@@ -1,0 +1,21 @@
+<?php
+use App\Http\Controllers\ProxyController;
+use App\Http\Controllers\ClientController;
+
+
+use Illuminate\Support\Facades\Route;
+
+
+Route::get('/', fn() => response(''));
+
+Route::get('/proxy-cctv', [ProxyController::class, 'cctv'])->middleware('throttle:30,1');
+Route::get('/proxy-cctv-audio', [ProxyController::class, 'cctvAudio'])->middleware('throttle:30,1');
+
+Route::get('/client/sinoptik/sinoptik-data-written-to-excel', [ClientController::class, 'sinoptikWritten']);
+Route::get('/client/backups/download-latest', [ClientController::class, 'downloadLatestBackup'])->middleware('throttle:10,1');
+
+Route::get('/proxy-cctv', [ProxyController::class, 'cctv'])->middleware('throttle:30,1');
+Route::get('/proxy-cctv-audio', [ProxyController::class, 'cctvAudio'])->middleware('throttle:30,1');
+
+Route::get('/client/sinoptik/sinoptik-data-written-to-excel', [ClientController::class, 'sinoptikWritten']);
+Route::get('/client/backups/download-latest', [ClientController::class, 'downloadLatestBackup'])->middleware('throttle:10,1');

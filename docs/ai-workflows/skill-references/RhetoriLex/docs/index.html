@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var preference = "system";
+  try {
+    var saved = window.localStorage.getItem("rhetorilex.theme");
+    if (saved === "light" || saved === "dark" || saved === "system") preference = saved;
+  } catch (error) {}
+  var dark = preference === "dark" ||
+    (preference === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  document.documentElement.dataset.themePreference = preference;
+}());
+</script>
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="Choose English or Bahasa Indonesia for the RhetoriLex academic writing index.">
+<meta name="theme-color" content="#f5f3ed" data-theme-color>
+<link rel="canonical" href="https://rezaprama.github.io/RhetoriLex/">
+<link rel="alternate" hreflang="en" href="https://rezaprama.github.io/RhetoriLex/en/">
+<link rel="alternate" hreflang="id" href="https://rezaprama.github.io/RhetoriLex/id/">
+<link rel="alternate" hreflang="x-default" href="https://rezaprama.github.io/RhetoriLex/">
+<meta http-equiv="refresh" content="8;url=./en/">
+<title>Choose Language | RhetoriLex</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script>
+(function () {
+  var locale = "";
+  try {
+    var saved = window.localStorage.getItem("rhetorilex.locale");
+    if (saved === "en" || saved === "id") locale = saved;
+  } catch (error) {}
+  if (!locale) locale = navigator.language && navigator.language.toLowerCase().indexOf("id") === 0 ? "id" : "en";
+  window.location.replace("./" + locale + "/");
+}());
+</script>
+</head>
+<body class="locale-root">
+<main id="main" class="locale-chooser">
+  <p class="wordmark">RhetoriLex</p>
+  <h1>Choose a language <span lang="id">Pilih bahasa</span></h1>
+  <p>Open the scholarly writing index in English or Bahasa Indonesia.</p>
+  <nav aria-label="Language">
+    <a class="primary-button" href="./en/" hreflang="en" lang="en">English</a>
+    <a class="secondary-button" href="./id/" hreflang="id" lang="id">Bahasa Indonesia</a>
+  </nav>
+  <noscript><p>Automatic language selection is unavailable. Choose a link above.</p></noscript>
+</main>
+</body>
+</html>

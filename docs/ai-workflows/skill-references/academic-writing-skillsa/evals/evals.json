@@ -1,0 +1,755 @@
+{
+  "skill_name": "academic-writing-skills",
+  "evals": [
+    {
+      "id": "locked_question_semantic_drift",
+      "prompt": "Shorten a manuscript after the authors locked a research question asking whether LLM-generated respondents reproduce human decision-factor levels and pathways. A draft summary now says only that the datasets have similarities and differences.",
+      "expected_output": "A Class A impact diagnosis that preserves the reproduction task, reopens the full evidence chain and all summaries, and does not weaken the locked question merely to reduce word count.",
+      "files": []
+    },
+    {
+      "id": "non_imrad_conceptual_paper",
+      "prompt": "Review a conceptual paper with premises, propositions, boundary conditions, and implications but no empirical Methods or Results headings.",
+      "expected_output": "A reader-function review that tests definitions, assumptions, derivation, counterexamples, boundaries, and contribution without falsely requiring empirical Methods or Results sections.",
+      "files": []
+    },
+    {
+      "id": "llm_reporting_dimension_gap",
+      "prompt": "Audit an LLM survey study that reports model identifier, runtime, tokens, and call count for one model, but only the model name for a second model. It also omits the selected-run rule and parser failure handling.",
+      "expected_output": "A dimension-completeness audit that reports asymmetric model fields, selected-run and parser gaps, distinguishes unknown from zero, and limits reproducibility and behavioral claims without inventing missing values.",
+      "files": []
+    },
+    {
+      "id": "cross_artifact_stale_release",
+      "prompt": "Check a submission package where the manuscript contains revised Figures 3-6 and two analyzed models, while standalone figure and table archives retain earlier numbering and four models.",
+      "expected_output": "A Class B and release-integrity diagnosis that identifies the active authority source, rebuilds or requests synchronized standalone artifacts, checks all affected text and summaries, and blocks submission readiness until exact files agree.",
+      "files": []
+    },
+    {
+      "id": "survey_group_comparison_scope",
+      "prompt": "One SEM path is significant for NMG and nonsignificant for MG, but no formal between-group comparison was performed. The conclusion says the path is significantly stronger for NMG.",
+      "expected_output": "A quantitative-adapter finding that separate within-group significance does not establish a significant group difference, with bounded replacement language and propagation to Results, Discussion, Abstract, and Conclusion.",
+      "files": []
+    },
+    {
+      "id": "submission_release_blockers",
+      "prompt": "The prose and figures are polished, but IRB or consent status, funding authority, API retention, and the active supplementary file remain unverified. Certify the package as final.",
+      "expected_output": "A refusal to label the package final or submission-ready, with S3/S4 issues, required authority sources, exact affected artifacts, and a functional-completeness retrospective naming the remaining limits.",
+      "files": []
+    },
+    {
+      "id": "technical_term_repetition_not_synonymized",
+      "prompt": "A paragraph repeatedly uses the defined construct name threat perception. The user asks to replace every repetition with synonyms so the prose sounds less AI-generated.",
+      "expected_output": "A prose revision that preserves the registered technical term, removes only avoidable surrounding repetition, improves sentence functions and flow, and does not infer AI authorship or rotate construct labels.",
+      "files": []
+    },
+    {
+      "id": "paragraph_contract_and_flow",
+      "prompt": "Draft three Discussion paragraphs from supplied findings and citations. The outline assigns interpretation, alternative explanation, and implication as separate paragraph functions.",
+      "expected_output": "Paragraphs drafted from function, claim, evidence, development, and bridge contracts, followed by a topic-sentence and closing-sentence sequence check that prevents duplicated functions and unsupported mechanisms.",
+      "files": []
+    },
+    {
+      "id": "literature_examples_form_cumulative_argument",
+      "prompt": "Revise a literature paragraph that lists several cited applications one after another. The broad reviews establish the field, two pairs of studies illustrate simulation and assessment, and one survey study is the closest precedent for the manuscript's human-comparison gap.",
+      "expected_output": "A cumulative paragraph that moves from broad field context through grouped examples to the closest precedent and then the gap, uses example markers only where they clarify a real relation, preserves claim-citation alignment, and does not force this order when another explicit evidentiary logic would fit better.",
+      "files": []
+    },
+    {
+      "id": "reader_accessible_academic_prose",
+      "prompt": "Revise a cross-disciplinary literature paragraph that uses an unexplained field umbrella label, opens one sentence with 'Beyond simulation,' and says that studies 'draw on data' when they simply use those data.",
+      "expected_output": "Plain scholarly prose that replaces nonessential field shorthand with a concrete description, states extensions through content rather than a transition template, uses a literal verb when no nuance is lost, and preserves technical terms that are necessary for the claim.",
+      "files": []
+    },
+    {
+      "id": "sensitivity_response_names_baseline_conclusion_and_final_setting",
+      "prompt": "Revise a reviewer response about a one-factor sensitivity test. The draft compares an alternative decision rule with a vague 'revised model setting,' reports changed loss values, says only that 'the conclusion remained unchanged,' and does not say which rule is used in the manuscript. The study design already provides an independent basis for the formal rule. The test does not directly compare adaptation with no adaptation.",
+      "expected_output": "A self-contained response that names the exact baseline and alternative decision rules, reports the relevant numerical change with its comparison reference, states the specific substantive conclusion that did or did not change, identifies the rule used in the formal model and its pre-existing design basis without treating robustness as model-selection evidence, locates the sensitivity evidence outside the adopted Methods when appropriate, and does not infer an adaptation-versus-no-adaptation effect from the rule comparison.",
+      "files": []
+    },
+    {
+      "id": "sensitivity_robustness_does_not_select_baseline",
+      "prompt": "A sensitivity analysis finds that several alternative parameter values change numerical estimates but not the main conclusion. No data, calibration, theory, prespecification, or study-design reason has been supplied for preferring the baseline. Write the concluding part of the reviewer response and state the final model choice.",
+      "expected_output": "A conclusion that names the substantive finding shown to be robust, does not claim that robustness makes the baseline preferable, and explicitly states that the sensitivity test alone cannot determine the adopted parameter value or that an independent selection basis is still required. It does not invent a post hoc rationale.",
+      "files": []
+    },
+    {
+      "id": "scope_sentence_grammar_only",
+      "prompt": "In an ongoing advisor-group manuscript, correct only the grammar of 'The model will randomly draws one depth for each household.' Do not change the model description or inspect other files. No manuscript state or source data is supplied.",
+      "expected_output": "A minimal grammatical correction to 'will randomly draw' that preserves the stated operation, does not initialize project state or launch a full manuscript/numerical audit, and does not certify scientific correctness or unseen artifacts.",
+      "files": []
+    },
+    {
+      "id": "scope_results_paragraph_so_what",
+      "prompt": "Review a Results paragraph using supplied verified outputs. RQ1 asks how two adaptation pathways change losses. Baseline GUL/actual loss are 100/80 for group A and 10/8 for group B; adaptation values are 95/50 and 4/2. The supplied decomposition attributes most of A's actual-loss reduction to payouts and most of B's reduction to relocation lowering GUL. The paragraph ends 'These results answer RQ1.' No other sections are requested.",
+      "expected_output": "A paragraph-level repair that reports the pathway contrast as the substantive answer, preserves the different roles of GUL and actual loss, checks the supplied comparisons, and does not treat the RQ label as an answer or invent a new causal story. It limits readiness to the paragraph and relevant context.",
+      "files": []
+    },
+    {
+      "id": "scope_subsection_multi_figure",
+      "prompt": "Review a subsection containing a loss-scenario figure, an AEP figure, and a perception trajectory figure. The figures show different descriptive components of three study questions. The draft repeats 'These patterns answer all three questions' after every figure. Only this subsection and its captions are supplied.",
+      "expected_output": "A cumulative subsection review that assigns distinct evidence functions, removes empty repeated syntheses, checks relevant captions and comparisons, and does not demand that each figure independently demonstrate the entire feedback chain. It names unavailable upstream context without calling the whole paper ready.",
+      "files": []
+    },
+    {
+      "id": "scope_chapter_reader_prerequisites",
+      "prompt": "Review a complete Methods chapter. A household-initialization subsection defines a policy-region status only after an earlier threshold table has already used it. Asset-distribution construction appears under behavior rather than exposure. The current chapter and its SM item list are supplied; the Introduction and raw data are not.",
+      "expected_output": "A chapter-level reorganization plan that introduces prerequisites before the table, places asset material with exposure, preserves remaining initialization and model settings, and updates affected SM pointers. It does not invent institutional enforcement or rewrite unsupplied chapters and distinguishes missing context from a verified error.",
+      "files": []
+    },
+    {
+      "id": "scope_whole_manuscript_claim_chain",
+      "prompt": "Review a full manuscript. The RQ asks how two groups compare in protection and burden; results show similar loss-difference/GUL percentages but different loss-difference/income percentages. The Abstract calls the groups equally protected overall, and the Conclusion ranks one group as less socially vulnerable. Only the manuscript is included, not SM or response.",
+      "expected_output": "A whole-manuscript evidence-chain review that limits similarity to the stated metric, corrects unsupported overall protection/vulnerability claims, checks affected summaries and definitions, and performs the four manuscript passes without certifying excluded SM or response.",
+      "files": []
+    },
+    {
+      "id": "scope_local_metric_cross_artifact_trigger",
+      "prompt": "Revise one definition: protection margin is now a normalized loss difference, with GUL as the denominator in Figure 7 and median household income in Figure 11. Their captions, two paragraphs, and response still call the margin both dollars and percent. Only the definition is authorized for editing; the other supplied files are read-only.",
+      "expected_output": "A precise normalized definition naming the denominator by context, with targeted checks and locations for affected figures, captions, discussion, summaries, and response. It explains that common percent units do not make the metrics identical, does not relabel the loss curves' y-axis as the margin, does not edit read-only dependencies, and reports them as unresolved rather than claiming synchronization.",
+      "files": []
+    },
+    {
+      "id": "chapter_closure_checks_are_content_conditional",
+      "prompt": "Complete the review of a qualitative Methods chapter describing purposive interviews and reflexive thematic analysis. No numerical model, group rates, or statistical tests are used. The prose looks fluent. Should the chapter-closure hidden-failure check be skipped, or must it include every simulation diagnostic?",
+      "expected_output": "Perform the closure check but select relevant questions about recruitment scope, researcher position, coding support, negative cases, and transferability. Do not impose calibration, numerical sensitivity, or denominators where inapplicable. Report source gaps and scope boundaries without claiming exhaustive unknown-unknown discovery.",
+      "files": []
+    },
+    {
+      "id": "results_composition_not_individual_decay",
+      "prompt": "Review only this Results paragraph: 'The neighborhood mean perception declined from 0.7 to 0.5, proving that every resident learned to feel safer.' The supplied evidence says residents may move between neighborhood categories, but has no within-person decomposition. Do not run new analyses.",
+      "expected_output": "Retain the aggregate finding while removing the universal individual-learning and causal claim. Explain that within-person change and composition may both contribute but neither contribution was isolated. Request or identify the diagnostic needed for a stronger interpretation without inventing its result or running it.",
+      "files": []
+    },
+    {
+      "id": "discussion_extension_unchanged_ranking_not_validation",
+      "prompt": "Plan a Discussion extension paragraph. A sensitivity test changes estimated losses by 20% but group A remains above B in each tested setting. No independent basis for the baseline is available. The draft says all conclusions and mechanisms are unchanged and the test validates the baseline.",
+      "expected_output": "Organize purpose, changed/held-constant design, baseline comparison, finding, and consequence. Limit stability to the observed ordering over the tested settings, preserve changed magnitudes, remove mechanism invariance and validation claims, and leave baseline selection rationale unresolved. Do not invent extra experiments or policy implications.",
+      "files": []
+    },
+    {
+      "id": "abstract_identity_without_fixed_template",
+      "prompt": "Draft an abstract for a 2024 qualitative study of 18 purposively recruited tenants in one city, using interviews and reflexive thematic analysis to examine housing instability after floods. Verified themes concern uncertain leases and disrupted support networks; no prevalence or causal estimates exist. A legacy template demands agents optimizing financial security, six fixed sentence blocks, 35-word caps, and a generalizable testbed.",
+      "expected_output": "Identify method and task, population and relevant city/time scope, supported themes and qualitative inference boundary. Treat six information functions as flexible, reject unsupported optimization/generalizability claims and unverified universal caps, and ask only for missing material facts such as the city name if necessary. Do not force a simulated mechanism or numeric prevalence.",
+      "files": []
+    },
+    {
+      "id": "visual_legibility_without_whitespace_overcorrection",
+      "prompt": "A four-panel figure has tiny legend text, an overlapping endpoint annotation, and large outer whitespace. The user asks for larger, clearer visuals and less blank space. No rendered document is available, only this description. Also shorten its caption and retain the uncertainty definition.",
+      "expected_output": "Propose improving final-size typography, repositioning the legend/annotation, and reducing only nonfunctional whitespace while preserving separation, aspect ratio, scales, and uncertainty information. Do not invent actual pixel positions or claim visual verification without rendering. Keep scientific result explanation in prose and reading information in the caption.",
+      "files": []
+    },
+    {
+      "id": "response_promises_and_rendered_locators",
+      "prompt": "Audit a response and manuscript package. The response promises a new SM sampling table that is absent, cites old panel letters after a figure split, claims an acronym removed from the manuscript, and contains guessed line ranges from XML counts. The reviewer will read a compared manuscript, but only a clean draft is rendered. SM has no line numbers. Do not modify the manuscript or rerun anything.",
+      "expected_output": "Identify the unmet promise without falsely resolving it, reconcile panel and terminology changes against actual files, and use verified SM item locators rather than guessed lines. Treat compared-version lines as unverified until that target is rendered and layout fixed. Do not certify the package or manufacture an addition, analysis, or line number.",
+      "files": []
+    },
+    {
+      "id": "abm_display_example_transfer_without_fact_copying",
+      "prompt": "Use the author-provided ABM Table 1 and Figure 6 worked examples in the display guide. First, a reader asks whether Table 1 bounds are observed adoption rates or 95% confidence intervals because citations are listed. Second, draft a caption for a separate experiment: two groups, 18 participants per group, one endpoint panel, group means and 95% confidence-interval error bars, no simulation or yearly series. Explain what transfers from the examples without changing either study's evidence.",
+      "expected_output": "Explain the ABM's threshold intervals and distinguish qualitative source rationale from empirical estimation; identify the note as a teaching addition, not original manuscript content. For the new experiment, use its actual groups, sample size, statistic and uncertainty, without importing 50 runs, six panels, GUL, years or threshold settings. Keep scientific interpretation separate from caption-reading information and do not claim figure-layout verification from text alone.",
+      "files": []
+    },
+    {
+      "id": "venue_first_without_scope_expansion",
+      "prompt": "Plan a qualitative education paper for an unselected journal using the WRR/ABM examples. Then repair only grammar in a separate accepted hydrology sentence whose venue profile is current. A colleague says the skill requires APA7, six sections, a new simulation, and another journal search for every sentence.",
+      "expected_output": "Clarify or keep provisional the education venue/article type/audience; do not apply WRR requirements universally or invent an analysis. Separate direction, format and style, source authority and submission stage. Keep the grammar-only edit bounded with unchanged applicable profile, not journal reselection or full audit.",
+      "files": []
+    },
+    {
+      "id": "map_and_borders_without_false_certification",
+      "prompt": "Use the ABM map and table examples to assess a described map with blue tract-area percentages, no GIS metadata, and a caption claiming percent residents insured. There is no rendered Word file. The target venue permits grouped table rules, but a colleague insists every table must copy ABM's three-line weights and every plot must lose its top/right spines.",
+      "expected_output": "Flag denominator/quantity mismatch without inferring household values; retain unknown CRS/vintage/scale and final-layout checks as unverified. Explain conditional map/border/grid choices and actual source formatting, not universal line weights or spine rules. Do not certify layout or invent metadata from an image.",
+      "files": []
+    },
+    {
+      "id": "citation_rationale_not_parameter_validation",
+      "prompt": "The draft cites Mondino et al. (2020) as proving an exact tract-GUL threshold and validating individual TP decay. Its bibliography has two different FEMA datasets assigned identical year letters, and a Kousky paper left uncited after a paragraph deletion. Explain targeted checks using the ABM examples without changing model settings or filling missing source metadata.",
+      "expected_output": "Separate qualitative context from empirical parameter estimation/validation, verify the primary source's actual claims and transfer limits, and keep model assumptions explicit. Check dataset identity, version, year/suffix and matching keys under venue rules; inspect the uncited work's relevance before removal rather than adding a topical citation to save it. No fabricated metadata or assumed blanket APA format.",
+      "files": []
+    },
+    {
+      "id": "topic_sentence_reverse_outline_preserves_actual_draft",
+      "prompt": "Use the skill to reverse-outline only a conceptual Introduction. Its four paragraph openings are: 'Water decisions connect people and infrastructure.'; 'Many tools study water decisions.'; 'Researchers use many tools to study these decisions.'; 'We compare how three modeling approaches represent decision authority.' The second paragraph's actual main point, stated later, is that the approaches place authority at different analytical levels. The third repeats its tool inventory and adds no distinct evidence. The fourth proposes a comparison, not a completed result. Identify the actual outline and the smallest repair; no Methods, Results, or other files are supplied.",
+      "expected_output": "Preserves the actual openings in the diagnostic, identifies the hidden second-paragraph function and repeated third-paragraph function, and proposes a minimal coherent topic-sentence sequence without inventing comparison findings or requiring empirical IMRAD headings or a new project record.",
+      "acceptance_criteria": [
+        "Distinguishes the observed opening sequence from a proposed improved outline.",
+        "Repairs hidden or duplicated functions rather than silently idealizing the supplied prose.",
+        "Preserves conceptual genre, missing-result status, and requested section scope."
+      ],
+      "files": ["skills/academic-writing-skills/references/lifecycle-and-routing.md"]
+    },
+    {
+      "id": "current_gap_and_sequential_questions_without_age_cutoff",
+      "prompt": "Assess only an Introduction plan using these supplied hypothetical source summaries. A foundational 1998 paper identifies uncertain collective decisions. A 2024 study compares aggregate group outcomes. A 2025 study uses a different term for the same aggregate comparison. Neither later study follows individual changes over time. The plan claims 'No study compares group outcomes' and proposes Q1 on aggregate differences and Q2 on within-person changes conditional on Q1. Explain the defensible gap and relationship of the questions. Do not search or edit a full paper.",
+      "expected_output": "Recognizes overlapping recent work and narrows the gap to the unsupported analytical level rather than declaring all old sources invalid. Describes Q1/Q2 as a potentially sequential design with distinct evidence needs, without forcing independence, claiming causal identification, or certifying an exhaustive novelty search.",
+      "acceptance_criteria": [
+        "Rejects the unsupported no-study claim while retaining the foundational source's legitimate role.",
+        "States the individual-change evidence need separately from existing aggregate comparisons.",
+        "Explains sequential questions without an arbitrary citation-age rule or causal inference."
+      ],
+      "files": ["skills/academic-writing-skills/references/introduction-and-study-context.md"]
+    },
+    {
+      "id": "response_working_draft_does_not_certify_pending_test",
+      "prompt": "Prepare a short advisor-facing response draft. The lab requests response-first review and prefers past-tense proposed wording. A reviewer asks for a sensitivity test. The advisor approved discussing a test but no analysis has been run, no execution authorization exists, and no manuscript has changed. The current draft says 'We tested the alternative and confirmed unchanged conclusions (Lines 200-210).' Explain what can be drafted now and how it becomes a final response. Do not run a model or assign line numbers.",
+      "expected_output": "Separates proposed strategy/working draft from a completed reviewer response; marks the test and manuscript changes pending and keeps the issue open. Does not fabricate robustness, accept unsupported line numbers, or infer execution permission from advisor agreement. Uses the supplied lab handoff without universalizing advisor approval.",
+      "acceptance_criteria": [
+        "Does not report an unperformed analysis, stable conclusion, or locator as verified.",
+        "Keeps the proposed test pending and distinguishes approval of discussion from execution authority.",
+        "Requires actual evidence and artifact reconciliation before final response status."
+      ],
+      "files": ["skills/academic-writing-skills/references/reviewer-response-workflow.md"]
+    },
+    {
+      "id": "chart_function_from_axes_not_filename",
+      "prompt": "Assess a hypothetical image named time-series.png. Its x-axis is log water footprint, rows are industries, curves show density distributions, and colored bands mark percentile ranges. No time variable, raw data, or export metadata is provided. Can it show how each industry's footprint changed after a policy, and what may be reused for a new figure comparing industries? Do not redraw the image or invent units.",
+      "expected_output": "Identifies a distribution/ridgeline comparison rather than a temporal trajectory, rejects the unsupported policy-change claim, and reuses only the quantity-appropriate comparison and encoding. Flags unknown density normalization, units, provenance, and final-size legibility without inventing them or transferring the exact layout automatically.",
+      "acceptance_criteria": [
+        "Classifies the display from the axes and marks rather than its filename.",
+        "Does not infer a temporal or policy effect without a time comparison.",
+        "Separates transferable encoding ideas from unverified units, normalization, and data."
+      ],
+      "files": ["skills/academic-writing-skills/references/figures-tables-and-supplements.md"]
+    },
+    {
+      "id": "first_handoff_reader_route_and_caption_allocation",
+      "prompt": "Prepare only the first draft of this comparison Results subsection for a broad research audience. The project asks how survey evidence differs from generated responses; specific model comparisons are secondary. Supplied findings: survey and generated means are close for attachment; generated insurance ratings are higher; generated response variability is lower. The current plan opens with two model-specific paragraphs, then defines the survey comparison. Its caption repeats selection procedures, three caveats from Methods, and the entire interpretation. The saved Word artifact and a rendered page are unavailable. The author requests a concise caption and a draft for discussion, not submission certification. No citations or other sections are supplied.",
+      "expected_output": "Stages the author-locked primary comparison before model detail; builds a cumulative, readable subsection from only supplied evidence. Allocates caption reading essentials separately from body interpretation and Methods detail without deleting necessary statistic definitions. Records scoped first-handoff findings and unavailable final-layout checks; delivers a provisional draft without a whole-paper audit, fabricated render, fixed word limit, or universal Human-first rule.",
+      "acceptance_criteria": [
+        "The primary comparison and dependent findings progress coherently rather than follow model/panel inventory.",
+        "Caption and body serve distinct reader functions; required reading conventions survive compression.",
+        "Missing render remains unverified at the first handoff despite any clean language scan."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md"]
+    },
+    {
+      "id": "first_handoff_format_basis_and_new_author_identity",
+      "prompt": "Assess a first Word draft handoff after caption shortening. The author explicitly asked to retain the accepted 1.5 spacing and to use their project identity for new edits and replies. A language scan is clean. Captions now use 1.0 spacing inherited from a replacement style; the editor calls it a journal requirement without official instructions. New replies are authored by Assistant, while legitimate historical reviewer comments have different authors. The file changed after its previous render. No current render or official venue source is accessible. Explain the next safe actions and what can be reported now; do not edit files or browse.",
+      "expected_output": "Separates language success from first-handoff acceptance, flags the unapproved spacing/source claim and wrong new author identity, preserves historical authors, and requires relevant rechecks after the file change. Reuses the author-approved baseline where authorized and keeps unavailable venue/render checks provisional without claiming compliance or fabricating evidence.",
+      "acceptance_criteria": [
+        "Does not treat a clean scan or stale render as current formatted-file acceptance.",
+        "Distinguishes author preference from verified journal mandate without universal spacing rules.",
+        "Verifies new-edit identity while preserving historical reviewer metadata and declares the remaining limits."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md"]
+    },
+    {
+      "id": "teaching_case_grammar_only_preserves_scope",
+      "prompt": "Fix only the grammar of this sentence: 'The model estimate daily demand.' Do not change the method or inspect other sections. The professor's teaching examples are available.",
+      "expected_output": "Returns a meaning-preserving grammatical repair without planning or reverse-outlining a section, importing source facts, or claiming broader verification.",
+      "acceptance_criteria": [
+        "Repairs the verb agreement without altering the scientific claim.",
+        "Does not expand the requested sentence-level task.",
+        "Does not claim method, citation, or whole-paper verification."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/professor-teaching-cases.md"]
+    },
+    {
+      "id": "teaching_case_conceptual_outline_no_imrad",
+      "prompt": "Help outline only a conceptual classification paper. It will compare how approaches represent authority, introduce classification axes, illustrate them, and discuss boundaries. No geographic case or experimental findings exist. Its current opening sequence repeats tool inventories before revealing the authority comparison. Use the professor-derived outline lesson.",
+      "expected_output": "Identifies the repeated inventory function and proposes a coherent topic-sentence progression for a conceptual argument, preserving proposed rather than completed claims and the limited scope.",
+      "acceptance_criteria": [
+        "Diagnoses repeated functions and stages the authority comparison before dependent detail.",
+        "Does not require a Study Area or empirical Methods/Results headings.",
+        "Does not fabricate findings, citations, or completed classification validation."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/professor-teaching-cases.md"]
+    },
+    {
+      "id": "teaching_case_abstract_missing_findings",
+      "prompt": "Revise an abstract plan, not a final abstract. The supplied information says a resource-system model is coupled with users' choices to study allocation in a basin. It spends most sentences on background and components and gives the purpose last. No results or current manuscript are supplied. Can the last sentence say the framework improves management?",
+      "expected_output": "Compresses redundant background, stages study identity before implementation detail, and requests the missing verified contribution rather than inventing a benefit or treating the objective as a result.",
+      "acceptance_criteria": [
+        "Improves information order without a universal sentence count.",
+        "Rejects the unsupported management-improvement claim and identifies missing findings.",
+        "Leaves the working abstract incomplete/pending rather than certifying it final."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/professor-teaching-cases.md"]
+    },
+    {
+      "id": "teaching_case_response_pending_not_completed",
+      "prompt": "Write a short advisor-facing response strategy for a reviewer requesting an alternative-method test. No test has been run, no execution was authorized, and no manuscript has changed. A proposed draft says 'We confirmed unchanged conclusions (Lines 120-130).' The advisor wants a response-first workflow. Do not execute or edit files.",
+      "expected_output": "Marks the test and edits pending, rejects the unsupported completion claim and locator, and outlines the direct answer/evidence/meaning/artifact sequence needed after authorized work is verified.",
+      "acceptance_criteria": [
+        "Does not report the pending test, stable conclusion, or line range as verified.",
+        "Keeps the concern open and does not infer execution authority from drafting approval.",
+        "Distinguishes the working strategy from a verified final response without universalizing advisor review."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/professor-teaching-cases.md"]
+    },
+    {
+      "id": "limitations_reader_continuity_and_consequence_allocation",
+      "prompt": "Revise only this limitations passage for a broad disaster-research audience, using the audited facts below. Draft: 'HC had fewer respondents than LC, so it may explain why the group results differed. Both groups received the same questionnaire, but the measurement checks were inconsistent. We selected and assessed questions using the same survey sample. Ten repeated generated-response runs were averaged, so the results have ten observations. The covariance matrix was adjusted; some factor correlations equaled one and residual variance estimates were zero. HC pathways were statistically significant, whereas LC pathways were not. Future studies should validate the model and examine purchase over time.' Audited facts: HC n=148 and LC n=788; the smaller HC sample may reduce precision or ability to detect differences, but does not establish why any particular result was nonsignificant. Identical item wording does not establish measurement comparability, and the checks are inconsistent. Separate within-group significance tests do not test a between-group difference; nonsignificance is not equivalence. Questions were selected and assessed on the same data, not checked on an independent household sample. Detailed covariance and fit diagnostics are in SM Table S18. Repeated generated-response runs are computational repeats, not new independent households; the aggregation protocol is already in Methods. A new household sample could check selected questions; longitudinal follow-up could compare stated willingness with later purchase. State what the current design can and cannot support, allocate only necessary technical detail to the main text, and propose a minimal revision plan. Do not invent analyses or findings.",
+      "expected_output": "Separates sample-size precision from measurement comparability and avoids attributing nonsignificance to the smaller group. Limits cross-group construct claims because comparability checks are inconsistent; does not infer a group difference from separate within-group significance or equivalence from nonsignificance. Treats same-data question selection as unvalidated on an independent household sample. Keeps repeated model runs out of the limitations unless tied to a concrete unsupported claim, leaves extended diagnostics in SM Table S18, and names their relevant inference consequence in reader-level language. Distinguishes a new household sample for checking selected questions from longitudinal follow-up for stated willingness versus later purchase. Organizes the explanation so each sentence's relation to the next is clear without relying on added transition words alone.",
+      "acceptance_criteria": [
+        "States that the smaller HC sample may reduce precision or ability to detect a difference, keeps this distinct from measurement comparability, and does not attribute a particular nonsignificant result to sample size.",
+        "Does not treat identical wording as measurement equivalence, within-group significance as a between-group test, or nonsignificance as equivalence.",
+        "Does not count computational repeats as additional independent households or list repeated runs as a limitation without a specific consequence.",
+        "Explains the inference consequence in the main-text plan while leaving detailed covariance/fit diagnostics in the existing SM location.",
+        "Matches the independent-sample remedy to question selection and longitudinal follow-up to stated willingness versus later purchase.",
+        "Provides a coherent sentence-to-sentence route, not merely a sequence of short statements connected by stock transitions."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "limitations_frame_research_boundary_not_paper_defect",
+      "prompt": "Draft a short limitation for a hypothetical flood-risk study that uses an established regional hazard dataset with known uncertainty in mapped flood extent. The calculations and data handling were checked and are correct; no analysis is missing. Explain the appropriate framing, the inference boundary, and what must not be implied. Also state what the author should do instead if an actual coding or calculation error is discovered.",
+      "expected_output": "Frames uncertainty as a constraint arising from the selected hazard data and explains which exposure-related inference is consequently bounded. Does not say the manuscript is defective or imply that correct use of uncertain data is an error. Clearly distinguishes that boundary from a genuine correctable coding/calculation error, which should be fixed rather than presented as a limitation. Does not overstate the dataset's direction or magnitude of bias.",
+      "acceptance_criteria": [
+        "Attributes the limitation to a real data, design, measurement, model, validation, or scope condition and names the affected inference.",
+        "Does not describe correct use of uncertain source data as a flaw in the manuscript or research execution.",
+        "Routes an actual correctable coding/calculation error to correction, not limitation framing.",
+        "Does not invent the direction or magnitude of dataset uncertainty."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "bounded_copyedit_preserves_coherent_expert_prose",
+      "prompt": "The surrounding methods paragraph is coherent and already defines its technical terms. Correct only the missing comma in this sentence: 'In this sample the HC group had 148 respondents.' Do not otherwise revise or inspect the section.",
+      "expected_output": "Makes only the requested punctuation correction. Does not force a plain-language rewrite, add connectors, require an independent reader, expand scope to the section, or launch unnecessary analysis.",
+      "acceptance_criteria": [
+        "Performs only the authorized punctuation edit and preserves scientific meaning.",
+        "Does not impose the substantive sentence-pair or limitations workflow on a bounded surface edit.",
+        "Does not claim extra verification or request unavailable facts."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md"]
+    },
+    {
+      "id": "cross_disciplinary_paragraph_pairs_and_CFA_limit",
+      "prompt": "Revise only this limitations paragraph for an informed reader outside psychometrics. The preceding text already defines the high-capacity (HC) and low-capacity (LC) groups and gives their sample sizes (148 and 788). Draft: 'The paragraph reports three social vulnerability index (SVI) measures for HC and LC. In addition, two CFA models of large-language-model (LLM) responses failed to converge. This measurement limitation also affects the findings. These models do not capture the same decision-making relationships.' Facts: CFA means confirmatory factor analysis, which checks whether response patterns support the proposed latent constructs; CFA has not yet been expanded in this section. Both CFA models failed to converge, so they do not support a claim that LLM responses reproduce that latent structure. The three SVI measures are separate descriptive results; no evidence says CFA failures change those values. 'The same decision-making relationships' is undefined and unsupported by the supplied text. Make the smallest coherent revision and explain its logic. Do not invent results, imply causation, or add a connector without stating the relation.",
+      "expected_output": "Keeps the descriptive SVI comparison distinct from the CFA limitation, expands confirmatory factor analysis at first use and explains its purpose in plain terms. States that failed convergence limits claims about whether LLM responses reproduce the proposed latent structure, without implying that the descriptive SVI values are invalid or changed. Removes or qualifies the empty restatement and the unsupported 'same decision-making relationships' phrase. Makes the relation between sentences clear from their content rather than a connector alone, while preserving the supplied groups and sample sizes.",
+      "acceptance_criteria": [
+        "A cross-disciplinary reader can distinguish the descriptive SVI results from the latent-structure check and explain what the failed CFA convergence does and does not support.",
+        "Defines confirmatory factor analysis at first use and gives its function without adding unsupported psychometric claims.",
+        "Does not claim CFA failure changes, invalidates, or explains the separate SVI values.",
+        "Removes or grounds the vague statement about capturing the same decision-making relationships.",
+        "Repairs the actual sentence relation or redundancy; a transition word alone is not accepted as the repair.",
+        "Preserves correct group labels and sample sizes and does not force redundant definitions or connectors."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md"]
+    },
+    {
+      "id": "limitation_source_uncertainty_not_manuscript_defect",
+      "prompt": "Assess a limitation for an interdisciplinary flood-risk study. The authors selected an index labeled MSRI because it is available for each study area. Its source documentation says that the estimates contain uncertainty, but the supplied excerpt does not identify the uncertainty's type, magnitude, direction, or affected components. The data processing was checked and no required analysis is missing. A draft says: 'Our manuscript is flawed because we used an unreliable MSRI, which may bias all conclusions.' State what is and is not a defensible limitation, what must be verified before writing its consequence, and what to do if an actual coding error is found. Do not expand MSRI, invent its properties, or browse.",
+      "expected_output": "Does not describe the manuscript as defective merely because the selected source/index has documented uncertainty. Separates the source/indicator choice from the uncertainty associated with its estimates, and requires checking the source documentation and identifying which measure or inference is affected before stating a consequence. Does not call all conclusions unreliable or infer bias direction. If those details remain unavailable, marks the specific consequence unverified rather than filling the gap with generic language. States that an actual coding/data-processing error should be corrected and rechecked, not reframed as a limitation. Does not expand MSRI or invent why it was selected beyond the supplied coverage fact.",
+      "acceptance_criteria": [
+        "Frames the limitation as uncertainty associated with the selected source/index, not as a defect in the manuscript or the mere fact of choosing it.",
+        "Requires evidence for the uncertainty type and for the specific affected measure or inference before stating a broad consequence.",
+        "Does not claim a direction or magnitude of bias or that all conclusions are affected.",
+        "Keeps unavailable uncertainty details explicitly unverified instead of masking them with generic wording.",
+        "Routes an actual correctable coding or data-processing error to correction and rechecking.",
+        "Does not expand or reinterpret the supplied MSRI label."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/execution-and-acceptance.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "noun_chain_explicit_relations_preserve_constructs",
+      "prompt": "Revise only these three phrases for a broad scholarly reader using the supplied meanings: 'renter flood insurance purchase willingness' measures renters' stated willingness to buy flood insurance, not enrollment; 'human insurance policy responses' concerns people's responses to insurance policies, not responses collected by insurers; 'insured household wellness scores' reports scores for insured households on a construct explicitly named wellness. Make the relations easy to understand without replacing constructs or adding findings.",
+      "expected_output": "Unpacks the phrases into clear possessives, prepositional phrases, or clauses, such as renters' willingness to buy flood insurance, people's responses to insurance policies, and wellness scores for insured households. Chooses each relation from the supplied meaning, does not apply the same preposition mechanically, and preserves wellness and willingness as distinct constructs. Does not imply observed purchases, causal effects, or new results.",
+      "acceptance_criteria": [
+        "Each revision identifies whose construct, what people respond to, or which population is scored without a new opaque noun chain.",
+        "Preserves wellness and willingness rather than substituting welfare, well-being, enrollment, or observed behavior.",
+        "Does not add results, causation, or unsupported institutional details."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_ambiguous_relation_not_guessed",
+      "prompt": "Make 'community insurance response wellness measure' clear for a manuscript. No definition, surrounding sentence, or instrument documentation is supplied. It could mean a measure of community wellness after responses to insurance, a measure of insurance-related responses collected from the community, or something else. Provide a safe next step, not an invented study description.",
+      "expected_output": "Explains briefly that the central construct and relationships are unresolved, asks a focused question about what the measure records and for whom, or offers alternatives explicitly conditional on the intended meaning. Does not pick a meaning silently, conflate wellness with willingness, or claim insurance improved wellness.",
+      "acceptance_criteria": [
+        "Keeps the missing relation explicit and requests only the information necessary to resolve it, or labels alternatives as conditional.",
+        "Does not silently select a construct, population, direction, mechanism, or instrument.",
+        "Does not use a mechanical of/to insertion or an invented causal claim as the repair."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_technical_terms_not_blanket_banned",
+      "prompt": "The manuscript uses the official program name 'National Flood Insurance Program', the defined statistic 'median household income', and the conventional method name 'random forest regression'. An editor wants to split every phrase with three or more nouns using 'of' or 'to'. Assess that request and improve only the separate phrase 'household insurance purchase willingness' if it means households' willingness to buy insurance.",
+      "expected_output": "Preserves the official name, defined statistic, and conventional method, rejects a blanket noun-count rule, and rewrites only the supplied opaque willingness phrase by expressing who is willing to do what. Treats noun count as a diagnostic rather than a ban and does not rotate technical terms for variety.",
+      "acceptance_criteria": [
+        "Retains all three supplied technical or official names exactly.",
+        "Repairs the generic willingness phrase without changing willingness into insurance adoption.",
+        "Explains that clarity and meaning, not a universal noun-count quota, determine whether to unpack a phrase."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_local_edit_preserves_scope_and_qualifiers",
+      "prompt": "Improve only this sentence: 'We measured renter flood insurance purchase willingness in 2024.' The defined construct is stated willingness to buy flood insurance; the study does not observe purchases. The adjacent paragraph, headings, figures, and reference list are locked and out of scope. Make the sentence easier to read without adding facts or editing those artifacts.",
+      "expected_output": "Makes a local repair such as 'We measured renters' willingness to buy flood insurance in 2024.' Preserves the actor, construct, past-tense measurement, and year, without claiming observed purchases or rewriting locked adjacent material. Does not launch a whole-manuscript audit or certify checks it did not perform.",
+      "acceptance_criteria": [
+        "Preserves measured willingness, the renter population, and 2024 without an opaque replacement noun chain.",
+        "Does not add actual purchasing, causal interpretation, prevalence, or measurement details.",
+        "Restricts the edit to the authorized sentence and does not claim broader verification."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_short_comparison_names_quantity_groups",
+      "prompt": "Revise the running-prose label 'Group mean differences were significant' using these hypothetical facts: insured respondents reported a higher mean willingness to buy flood insurance than uninsured respondents (4.2 versus 3.6 on the same scale; p = .03). These facts are illustrative, not findings from a real manuscript. Name the groups and measured concept directly, preserve the comparator, and do not infer actual purchases or an insurance effect. Also assess whether a table heading 'Mean difference' must be changed when that table explicitly names the two groups and construct.",
+      "expected_output": "States directly that insured respondents reported greater mean willingness to buy flood insurance than uninsured respondents and explicitly preserves statistical significance. The supplied numeric details may be retained when useful. Explains that the three-word label's problem is missing relations, not noun count. Preserves the clear table heading because its quantity and comparison are locally defined, without promoting an author-specific prose preference into a universal statistical-term ban.",
+      "acceptance_criteria": [
+        "Identifies insured and uninsured respondents, mean willingness to buy flood insurance, the comparison direction, and statistical significance.",
+        "Does not turn reported willingness into observed purchases or imply insurance causes willingness.",
+        "Retains the locally defined table heading and rejects a universal ban on mean comparisons."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_possessive_source_construct_not_stacked",
+      "prompt": "Improve only 'Human respondents' insurance willingness exceeded LLM-generated respondents' insurance willingness.' The hypothetical result concerns self-reported willingness to buy flood insurance in human survey responses and willingness stated in LLM-generated responses; it does not observe purchases or test causes. Neither converting the first phrase to 'human respondent insurance willingness' nor renaming the construct is acceptable. Make the data sources, action, and comparator immediately identifiable.",
+      "expected_output": "Uses a clear subject and verb, for example human respondents reported greater willingness to buy flood insurance than LLM-generated respondents. Alternatively uses short, explicit phrases that retain both data sources and the construct. Does not keep the opaque possessive stack, erase the comparison, claim actual purchases, or attribute human intentions to observed model behavior.",
+      "acceptance_criteria": [
+        "Names both human and LLM-generated respondents and what the stated willingness concerns.",
+        "Preserves the human-greater-than-generated direction without implying actual purchases or a causal effect.",
+        "Does not repair the wording solely with a possessive, synonym rotation, or a mechanical preposition insertion."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "noun_chain_repair_preserves_direction_significance_causality",
+      "prompt": "Make these hypothetical running-prose results understandable, preserving every supplied qualification: 'Group mean differences in willingness favored insured respondents over uninsured respondents (4.2 versus 3.6), but were not statistically significant (p = .18). Human respondent insurance willingness had a positive association with perceived flood risk; the observational survey does not establish causation.' In both results, willingness means stated willingness to buy flood insurance. A proposed rewrite says: 'Insured and uninsured respondents were equally willing to buy insurance. Higher flood risk made human respondents buy more insurance.' Evaluate that rewrite and supply a safe minimal alternative. Do not invent equivalence tests, causal identification, or actual purchase data.",
+      "expected_output": "Rejects both semantic distortions. States that insured respondents reported higher mean willingness to buy flood insurance than uninsured respondents but the difference was not statistically significant; preserves values and p when reporting them. States the positive association between perceived flood risk and reported willingness without turning it into a causal effect or observed purchases. Keeps both groups, the measured concept, and the observational limit explicit.",
+      "acceptance_criteria": [
+        "Preserves the positive direction and nonsignificance together, not equality or equivalence.",
+        "Preserves both comparison groups and willingness rather than actual purchases.",
+        "Rejects the causal rewrite and retains the observational association and inference limit."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "plain_scholarly_cross_field_prerequisites_and_uncertainty",
+      "prompt": "Revise these synthetic results for a scientifically literate reader from another field, retaining the supplied results and limits. Ecology: 'Urban tree canopy pollinator species richness association was positive.' In 40 observational plots, canopy is the share of land covered by tree crowns and richness is the number of pollinator species observed; greater canopy was associated with more species (Spearman rho=.45), not an established effect of planting trees. Machine learning: 'Cross-domain classification performance superiority was 3%.' On a site not used in training, model A correctly classified 82% of cases and B 79%; difference 3 percentage points, 95% confidence interval -1 to 7 percentage points. This interval includes zero and establishes neither superiority nor equivalence; this site only. Social science: a randomized trial of 500 jobseekers found that assignment to a travel voucher rather than none increased mean job applications in the following month from 1.1 to 1.4. Random assignment supports an effect of assignment in this trial, not a measured employment or income effect. Introduce only necessary prerequisites; do not add findings, citations, or a mechanism.",
+      "expected_output": "Names the observed units, quantities and comparators through clear subjects and verbs. Explains tree canopy/species richness and accuracy minimally where needed, retaining the supplied sample sizes, values, units, timing and uncertainty. Keeps ecology observational, explains why the zero-crossing accuracy interval does not establish superiority or equivalence, and preserves the supported effect of randomized voucher assignment on applications within the trial. Does not substitute employment for applications, generalize to unstudied sites or populations, or create another opaque noun chain.",
+      "acceptance_criteria": [
+        "A cross-disciplinary reader can identify each population or unit, measured quantity, comparator and direction from the revised prose without internal labels.",
+        "Preserves 40/.45, 82/79 and 3 percentage points with the -1 to 7 interval, and 500/1.1/1.4 with the one-month trial scope.",
+        "Retains observational versus identified-effect distinctions and does not claim equality, employment/income outcomes, generalizability or an untested mechanism."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "plain_scholarly_local_scope_and_unknown_construct",
+      "prompt": "Make only 'Community response resilience gain improved' clear enough for a reader from another field. No construct definition, comparison, unit, intervention or adjacent text is supplied, and the surrounding section is locked. The author asks for plain scholarly language, not invented results or a full-section rewrite. Explain the safe next step. Do not promise that all readers will understand every technical method.",
+      "expected_output": "Identifies the missing measured concept and comparison and asks a focused clarification or offers explicitly conditional alternatives. Does not silently rename resilience, invent an intervention, direction or mechanism, rewrite locked neighboring material, or certify section flow without context. Treats cross-disciplinary access as a target with minimum necessary explanation, not a guarantee or a requirement to remove every technical term.",
+      "acceptance_criteria": [
+        "Leaves the unresolved construct and relationship explicit rather than replacing them with a fluent but invented result.",
+        "Requests only necessary missing information or labels alternative wording as conditional, while keeping the authorized local scope; does not presume an intervention or demand neighboring text solely to offer local help.",
+        "Does not claim universal reader comprehension, a full-section flow check, new empirical evidence or a causal explanation."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "plain_scholarly_standalone_terms_and_comparators",
+      "prompt": "Write two standalone synthetic results for a researcher from another field. Machine learning: model A correctly classified 82% and model B 79% at one site not used in training; difference 3 percentage points, 95% confidence interval -1 to 7 percentage points, establishing neither superiority nor equivalence. Biology: cultured cells assigned to a compound had 40% fewer messenger RNA copies from gene X than control cells after exposure; messenger RNA here is RNA transcribed from a gene, and protein abundance was not measured. Keep the comparisons, values and inference limits, explain only necessary terms, avoid unexplained CI or dense nested definitions, and do not add findings or a clinical implication.",
+      "expected_output": "Uses clear subjects and grammatically direct comparisons. Spells out confidence interval in this standalone passage, retains percentage-point units and site scope, and states that neither superiority nor equality is established. Identifies compound-treated versus control cells, explains the supplied RNA role minimally, and does not infer protein production or clinical effects. Preserves the findings without replacing essential information with shorter but opaque wording.",
+      "acceptance_criteria": [
+        "The independent reading boundary contains the necessary term explanations without hidden acronym definitions or nested qualifications that obscure the main comparison.",
+        "Retains 82/79, the 3-percentage-point difference, -1 to 7 interval, site-only scope and the absence of superiority/equivalence evidence.",
+        "Retains gene X, the 40% compound-versus-control RNA difference and the unmeasured protein boundary, with no invented clinical claim."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/prose-and-citation-editing.md"]
+    },
+    {
+      "id": "reader_review_sudden_pathway_label",
+      "prompt": "Independently review this entire hypothetical paragraph for an informed cross-field reader: 'Households may buy insurance or move. Owners may also elevate their homes. These pathways differ by tenure.' Report the first point requiring a guess, its missing prerequisite, a source-grounded paragraph paraphrase, and the smallest safe repair. The author has not specified whether pathways means available options or an ordered sequence. Do not invent that meaning or a flood-loss result.",
+      "expected_output": "Locates pathways as an unmapped label after concrete actions, distinguishes options from sequences, and requests the intended meaning or gives explicitly conditional repairs. Paraphrases the available actions without adding temporal or causal findings. Does not ban pathway as a word.",
+      "acceptance_criteria": [
+        "Identifies the exact first-use phrase and absent action-to-label mapping.",
+        "Does not select an unsupported sequence or mechanism from specialist knowledge.",
+        "Keeps the repair local, conditional when needed, and preserves established actions."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_definition_arrives_late",
+      "prompt": "Cold-read both sentences, in order: 'Functional redundancy was higher at site A than at site B. Here functional redundancy means that several species perform the same ecological function.' Identify comprehension at first use, even if the second sentence resolves it. Give a minimal repair using only supplied meaning; do not add a measurement formula or infer that the sites differ in resilience.",
+      "expected_output": "Records the initial missing definition and the later resolution separately; moves or integrates the supplied definition before the comparative claim. Preserves site A versus B and does not infer resilience or a method from the construct name.",
+      "acceptance_criteria": [
+        "Does not call first use clear solely because the full paragraph eventually contains a definition.",
+        "Repairs prerequisite order rather than adding a transition word alone.",
+        "Preserves the construct, comparison and evidentiary boundary."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_expansion_without_meaning",
+      "prompt": "Review: 'We calculated the Community Recovery Index (CRI). CRI increased after the event.' Only this text is available. Is expanding CRI enough for a reader to interpret the result? Locate what is missing and give the safe next step, not an invented formula, benefit, or causal explanation.",
+      "expected_output": "States that the expanded name does not establish the measured dimension or direction and requests the index definition needed to interpret an increase. Does not infer improved welfare, construct a formula, or certify recovery from the label.",
+      "acceptance_criteria": [
+        "Identifies the missing quantity/role at the interpretation sentence.",
+        "Does not equate acronym expansion with conceptual explanation.",
+        "Leaves unprovided facts unresolved and keeps clarification scoped."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_denominator_changes_role",
+      "prompt": "Review two synthetic sentences: 'Insurance covered 40% of property loss. Protection was 8% after considering income.' Supplied meaning: the second measure is the loss covered by insurance divided by annual household income, not covered loss divided by property loss. Flag any unexplained shift and minimally repair it without changing the values or implying coverage fell, improved welfare, or affordability.",
+      "expected_output": "Locates the second measure's absent denominator/mapping and explicitly names loss covered relative to annual income. Preserves 40% of loss and 8% of income as different normalizations, with no directional comparison of like quantities or unmeasured welfare claim.",
+      "acceptance_criteria": [
+        "Makes the numerator and different denominator explicit.",
+        "Preserves the exact supplied percentages and household/time basis.",
+        "Does not compare the two percentages as a drop in insurance coverage."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_ambiguous_referent",
+      "prompt": "Read the entire paragraph: 'Owners had higher property losses than renters. Renters had higher insurance enrollment than owners. This difference motivates our analysis.' Which comparison does the last sentence name? Report a located finding and safe repair. The intended referent is not supplied; do not guess it, erase either comparison, or change this into a causal claim.",
+      "expected_output": "Locates this difference as ambiguous because two comparisons precede it. Requests the intended comparison or offers conditional wording that names losses or enrollment explicitly. Preserves both observed comparisons and does not impose a ban on demonstratives.",
+      "acceptance_criteria": [
+        "Names both possible antecedents instead of guessing one.",
+        "Provides a minimal, explicitly conditional repair or focused question.",
+        "Keeps comparisons and inference limits intact."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_standalone_caption_boundary",
+      "prompt": "Assess this caption as a standalone entry point: 'AEP and the margin by tenure.' Supplied body definitions: aggregate exceedance probability (AEP) relates annual loss to its exceedance probability; the margin is the difference between named ground-up-loss and actual-loss curves at the same probability, divided by ground-up loss in this figure. Red is ground-up loss, blue is actual loss; panels a/b are owners/renters. Propose only the minimum caption additions required to decode the figure, without duplicating unspecified extended procedures or inventing numbers.",
+      "expected_output": "Restores the full AEP term and minimum relation, names the curves, panel/color mappings and percentage-of-ground-up-loss margin. Treats the caption as its own reading boundary, not as clear because definitions are elsewhere. Avoids new numerical results and a methods dump.",
+      "acceptance_criteria": [
+        "Provides decoding prerequisites at the standalone caption boundary.",
+        "Preserves the supplied normalization, quantities, colors and panels.",
+        "Does not claim a fresh rendered-layout or scientific verification."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_defined_term_positive_control",
+      "prompt": "Review this complete paragraph for terminology access: 'Species richness is the number of species observed in a plot. Richness was higher in shaded plots than in unshaded plots.' Do not manufacture a comprehension fault or add textbook definitions simply to produce a finding. State the paragraph's source-grounded contribution and the limit of this review; this comparison alone does not establish a causal shade effect.",
+      "expected_output": "Recognizes that the term and comparator are available before the result, reports no terminology repair needed, and paraphrases the higher observed species count in shaded plots. Does not add a causal conclusion or certify other study methods.",
+      "acceptance_criteria": [
+        "Retains the defined technical construct without redundant explanation.",
+        "Reports a no-issue outcome for the reviewed scope rather than inventing defects.",
+        "Preserves the descriptive comparison and limits the claimed check."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_local_grammar_scope",
+      "prompt": "Correct only the grammar in 'The samples was stored at 4°C.' Surrounding content is locked. Do you need two independent full-section readers for this task? Return the correction and the scope of the actual check without adding procedures or a manuscript-wide assurance.",
+      "expected_output": "Changes was to were and retains 4°C. Uses a local meaning/grammar check rather than launching a whole-section review, and does not claim independent reviewers or scientific verification occurred.",
+      "acceptance_criteria": [
+        "Preserves the sample, storage statement and temperature.",
+        "Does not expand authorized scope or invent procedural detail.",
+        "Truthfully labels the limited check and avoids automatic multi-agent review."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_staged_methods_positive_control",
+      "prompt": "Read this complete hypothetical unit for an interdisciplinary audience. Introduction: 'Community networks connect residents who exchange practical help. We examine how these networks support recovery after a storm.' Methods: 'We interviewed 20 residents selected to include different ages and housing situations. We coded descriptions of help received.' Review comprehension and placement, without redesigning the research.",
+      "expected_output": "Recognizes that the concept and purpose are accessible before operational detail. Does not require interview selection or coding procedures in the Introduction or manufacture quantitative cutoffs. Limits the no-change judgment to supplied comprehension and placement.",
+      "acceptance_criteria": [
+        "Distinguishes conceptual setup from legitimately deferred operational detail.",
+        "Does not impose quantitative tests or IMRAD additions on qualitative research.",
+        "Preserves the study's sample and stated scope."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_discussion_extension_positive_control",
+      "prompt": "Review this hypothetical Discussion excerpt from a conceptual article: 'Our argument assumes that information can be shared. To examine its boundary, we now consider two departments forbidden to exchange information. In this case the proposed coordination rule cannot operate across departments.' Is local progression clear? Do not impose an empirical article template or invent a study area or experiment.",
+      "expected_output": "Recognizes an introduced counterexample and its consequence as a legitimate local extension. Does not move it to Results or invent missing empirical methods solely because it is in Discussion.",
+      "acceptance_criteria": [
+        "Paraphrases the premise, counterexample and bounded consequence from the text.",
+        "Reports no structural repair required for this supplied unit.",
+        "Does not generalize the counterexample beyond its stated premise."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_display_joint_context",
+      "prompt": "Review this standalone geology display using all provided parts. Caption: 'SI at the three sampling sites.' Axis: 'SI (dimensionless)'. Legend: 'Saturation index (SI) indicates mineral saturation; SI > 0 means supersaturation, SI = 0 equilibrium, SI < 0 undersaturation. Circles denote observations.' Review only decoding; no underlying observations or rendered image are supplied.",
+      "expected_output": "Uses caption, axis and legend jointly and reports no acronym or direction repair needed. Does not demand the same definition be duplicated in the caption or claim visual-layout or scientific validation.",
+      "acceptance_criteria": [
+        "Uses the available legend before alleging an undefined quantity.",
+        "Keeps optional editorial preferences separate from an actual obstruction.",
+        "Does not invent site differences or certify an unrendered figure."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_statistics_source_dependency",
+      "prompt": "A biology figure caption labels group summaries as medians; an indistinct cropped image appears to show 2.7 for a score described as integer-valued. Sample size, aggregation order, plot code and full display are unavailable. Review the possible mismatch and state the smallest safe next step. Do not change the scientific file.",
+      "expected_output": "Records a source-dependent question, requests full display and aggregation/code evidence, and withholds a definite mean-versus-median correction. Does not infer invalid analysis or replace median globally from the crop alone.",
+      "acceptance_criteria": [
+        "Keeps observed wording separate from uncertain image reading and aggregation.",
+        "Names the evidence needed to decide whether a correction is warranted.",
+        "Does not turn suspicion into an asserted error, new result or global edit."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_distinct_statistics_positive_control",
+      "prompt": "Review this hypothetical complete result: 'The figure shows median healing times by group. A separate test compares the groups' mean healing times, with a confidence interval for that mean difference.' Both summaries are explicitly labeled, and no contradiction or underlying data is supplied. Assess readability, not the choice of analysis.",
+      "expected_output": "Recognizes distinct, explicitly labeled statistical roles. Does not call using medians in a display and means in a separate test inherently inconsistent or force one statistic throughout.",
+      "acceptance_criteria": [
+        "Keeps the display summary and test estimand distinct.",
+        "Does not infer statistical invalidity or invent numerical evidence.",
+        "Reports the limited no-change outcome without certifying the study."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "reader_review_selection_rule_pair",
+      "prompt": "Review two independent machine-learning excerpts. A: 'We trained 12 seeds. The prespecified seed 0 supplies the primary benchmark; other seeds assess prediction-distribution stability only, not stability of all benchmark metrics.' B: 'We trained 12 seeds and used one for the primary benchmark.' Locate any unresolved selection question, preserving scope and without assuming misconduct.",
+      "expected_output": "Retains A's declared selection and limited stability claim. For B asks which seed and how selected; does not infer favorable selection, demand a new analysis automatically, or claim all metrics were tested.",
+      "acceptance_criteria": [
+        "Does not report a missing rule already present in A.",
+        "Classifies B as requiring a source-dependent clarification rather than proven selective reporting.",
+        "Keeps the repair to the missing selection bridge and preserves uncertainty scope."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/independent-reader-review.md"]
+    },
+    {
+      "id": "limitation_identify_explain_only_without_self_indictment",
+      "prompt": "Draft a short limitations-only paragraph from these supplied facts: a habitat model assigns records to districts because individual coordinates are uncertain; district totals were checked but individual sites were not evaluated. The intended use is district comparison, not site-level prediction. No robustness analysis was performed. Source notes mention a possible future geocoded field survey, but the author explicitly excludes remedies and future work from this section. The rough draft says: 'Our unreliable data make the results and their interpretation problematic.' Do not run analysis or add a section overview for this local paragraph edit.",
+      "expected_output": "Replaces generic self-indictment with coordinate uncertainty and its limit on site-level inference. Omits the future survey despite its availability in the notes. Retains the supported district-scale use without asserting that aggregate checks establish site accuracy.",
+      "acceptance_criteria": [
+        "Names the specific source constraint and affected spatial inference.",
+        "Does not invent bias direction, global unreliability, or completed robustness checks.",
+        "Stops at the inference boundary, without a remedy, future proposal, or unnecessary section overview."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "limitation_coherent_boundary_no_forced_remedy",
+      "prompt": "Proofread only this supported limitation without changing its scope: 'Interviews cover residents of three towns. The findings describe experiences in those towns and do not establish their prevalence across the country.' No new sampling or future-work plan is supplied. State whether a rewrite or another test is needed.",
+      "expected_output": "Retains the coherent source-specific limitation without inventing a mitigation, promising a national survey, or demanding a statistical test for qualitative prevalence not claimed.",
+      "acceptance_criteria": [
+        "Accepts the documented coverage boundary as functioning prose.",
+        "Does not force a third sentence or future project to complete a template.",
+        "Keeps the requested proofreading scope and the qualitative study design."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "limitation_absent_test_not_automatic_failure",
+      "prompt": "A materials study reports measured conductivity for specimens under two stated laboratory temperatures. It makes no population, causal-treatment, or field-performance claim. The author asks whether to add 'We did not conduct randomized trials, longitudinal follow-up, or demographic invariance tests, which may undermine the findings' to Limitations. No failure or applicable need for those tests is documented. Give the smallest safe recommendation.",
+      "expected_output": "Rejects the unrelated missing-test list without certifying all methods. Requires a documented constraint and a claim it actually limits before adding a limitation, and does not invent an alternative flaw.",
+      "acceptance_criteria": [
+        "Does not treat unperformed tests as evidence that the reported measurements failed.",
+        "Does not import another research design's requirements.",
+        "Preserves the local review scope and avoids unsupported reassurance."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "limitation_required_evidence_gap_not_concealed",
+      "prompt": "An observational clinic comparison states 'The treatment caused faster recovery.' Patients selected their treatment, and no design or analysis addressing confounding is supplied. The author wants only to add 'Random assignment could be used in future' under Limitations and retain the causal result to avoid reviewer questions. Identify the smallest necessary repair without running analyses.",
+      "expected_output": "Requires narrowing the unsupported causal wording and explaining the comparison's confounding boundary. A future randomization suggestion does not justify keeping the causal claim or imply a completed test. Does not assert that the treatment is ineffective.",
+      "acceptance_criteria": [
+        "Does not hide a material inference gap under nondefect framing.",
+        "Distinguishes an association supported by the comparison from an unestablished causal effect.",
+        "Does not claim randomization, adjustment, or new analysis was performed."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "results_first_distribution_orientation_before_values",
+      "prompt": "Revise a first Results encounter for an interdisciplinary reader. Supplied evidence: Figure 1 plots household-level preparedness scores from 1 to 5 for survey responses and two synthetic response sources. Each distribution is for the same 240 profiles; the synthetic summaries use run 1. Household SDs are 0.90, 0.45 and 0.40, respectively. The rough text starts 'The standard deviations are 0.90, 0.45 and 0.40.' Introduce what is compared, report the supported pattern, and explain its limited meaning. No significance or agreement test is supplied.",
+      "expected_output": "Briefly orients readers to the score distributions and response sources before the numerical comparison, then states that synthetic scores vary less among households in the illustrated run. Does not present across-household SD as across-run uncertainty or infer agreement, significance, or cause.",
+      "acceptance_criteria": [
+        "Supplies the population, scored quantity and comparison before unexplained numerical values.",
+        "Uses the numbers to support a spread comparison and gives its reader-facing meaning.",
+        "Preserves the run-1 boundary and does not duplicate a full plotting tutorial."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/results-and-explanation.md"]
+    },
+    {
+      "id": "results_repeated_display_inherits_context",
+      "prompt": "The previous paragraph already introduces boxplots of travel time in minutes, central lines as medians, and a city-versus-rural comparison. Figure 2 uses the same quantities and encodings for weekends; the caption repeats the encodings. Supplied evidence: rural weekend travel times have a wider interquartile range than city times. Revise only this redundant opening: 'We then present another boxplot. A boxplot shows the distribution of travel times, with a central median line. Rural weekend travel times have a wider interquartile range than city times.'",
+      "expected_output": "Introduces the weekend comparison or finding directly, carrying forward the existing reading logic without repeating the boxplot tutorial or a new 'we then present' frame. Does not invent a numerical difference or cause.",
+      "acceptance_criteria": [
+        "Preserves the new time condition and rural-versus-city comparison.",
+        "Removes redundant orientation while retaining necessary context.",
+        "Does not impose a global ban on figure-first prose or force a separate so-what sentence."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/results-and-explanation.md"]
+    },
+    {
+      "id": "results_repeated_plot_changed_denominator_reorients",
+      "prompt": "A finance Results section has already explained loss distributions as percentages of asset value. The next figure uses the same plot style but divides losses by annual household income instead. Both axes use percent units. No numerical results from the second figure are supplied. Draft only the bridge into that figure, not its findings.",
+      "expected_output": "Explicitly introduces the changed income denominator and comparison purpose despite the familiar plot style. Does not call the quantities identical because both use percent or invent a larger burden for either group.",
+      "acceptance_criteria": [
+        "Restores necessary orientation when the estimand changes.",
+        "Distinguishes shared visual encodings from the denominator's meaning.",
+        "Provides only the authorized bridge without fabricated results."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/results-and-explanation.md"]
+    },
+    {
+      "id": "results_oriented_finding_led_opening_no_change",
+      "prompt": "Review only whether display orientation is missing. The preceding sentence is 'Figure 3 compares seedling height distributions for irrigated and rain-fed plots in centimeters after eight weeks.' The next sentence is 'Irrigated seedlings are taller on average, although the distributions overlap.' The caption defines all encodings. No calculation or causal review is requested. Should another 'This figure presents...' introduction be added?",
+      "expected_output": "Reports no orientation repair needed because adjacent prose already establishes the comparison. Preserves the finding-led sentence and does not invent numbers, change the claim, duplicate the caption, or demand another synthesis sentence.",
+      "acceptance_criteria": [
+        "Checks the supplied adjacent context before alleging a missing introduction.",
+        "Accepts a concise no-change outcome rather than forcing a display template.",
+        "Does not certify statistical or causal validity outside the requested check."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/results-and-explanation.md"]
+    },
+    {
+      "id": "limitations_overview_grouped_categories_impact_only",
+      "prompt": "Plan and draft a short full limitations-only section. The author requests an opening overview naming two categories, followed by one paragraph per category, with constraints and impacts only. Supplied facts: coverage is one coastal province observed during 2019, so other places and periods were not directly examined. Model representation omits household interaction and holds non-risk attitudes fixed, so the simulation cannot establish social diffusion or responses to changing attitudes. No error or completed robustness test is documented. A later multi-region project is mentioned in notes but must not appear in this section. Preserve the two categories coverage and model representation; do not force three categories or discuss remedies.",
+      "expected_output": "Names the two supplied categories in a short opening, then gives two coherent category paragraphs pairing each constraint with the inference it limits. Does not claim findings fail elsewhere, invent bias, add another category, or append future work.",
+      "acceptance_criteria": [
+        "Overview and paragraphs use the same two supplied categories, without a mandatory extra introductory paragraph.",
+        "Each category explains its specific constraints and supported consequences rather than merely listing limitations.",
+        "Excludes solutions, completed mitigation claims and future proposals, even when notes contain a possible plan."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "limitations_future_work_explicit_author_override",
+      "prompt": "This is an independent article with a different author instruction: write a combined limitations-and-future-work passage, explicitly including a future direction. The interview study covers two towns and does not estimate national prevalence. The supplied feasible proposal is recruitment in additional regions to examine whether the themes recur; no further study has occurred. Draft two concise sentences, preserving qualitative evidence and distinguishing future work from completed work.",
+      "expected_output": "States the geographic/prevalence boundary and includes the explicitly requested future regional comparison as a proposal. Does not promote the limitations-only preference into a universal ban or imply that more interviews alone establish national prevalence.",
+      "acceptance_criteria": [
+        "Honors the independent author's explicit combined-section instruction.",
+        "Keeps the future comparison prospective and linked to the stated coverage boundary.",
+        "Does not invent completed recruitment, national prevalence estimates, or a universal section template."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/discussion-and-limitations.md"]
+    },
+    {
+      "id": "terminology_project_context_and_protected_spans",
+      "prompt": "Review only the supplied wording in a fresh context. Survey alpha confirms willingness to buy flood insurance for stated intention, not observed enrollment; insurance readiness is a prohibited synonym in author prose but appears in a quoted historical title. Ecology beta, the currently requested paper, defines species richness as the number of species; it records 17 species at site A and 23 at site B. Its sentence says Diversity was higher at site B. Keep the quoted historical title unchanged in the separate alpha case, correct beta's local label by its own definition, and do not import alpha's terminology or alter observed enrollment into stated willingness. No whole-paper review is authorized.",
+      "expected_output": "Uses the correct paper's confirmed concept, distinguishes intention from behavior and richness from diversity, and retains protected quotations without globally exempting their words.",
+      "acceptance_criteria": [
+        "Makes only definition-supported local repairs and preserves 17 versus 23.",
+        "Retains the exact historical title while distinguishing it from author prose.",
+        "Does not invent a definition, import another paper's rules, or claim whole-paper verification."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/state-and-authority.md"]
+    },
+    {
+      "id": "terminology_provisional_choices_and_dependency_change",
+      "prompt": "In a new session, the project record marks adaptation pathway PROPOSED with no supplied definition or author confirmation; an earlier assistant draft used it once. A prior receipt checks candidate H against registry r1; current registry r2 changes an allowed-variant rule while candidate H is unchanged. State whether either draft use or unchanged candidate bytes permits confirmation or reuse. No new audit has run and no edits are authorized.",
+      "expected_output": "Keeps the term provisional, asks only for the missing authoritative meaning/decision when needed, and requires a current scoped check against r2 instead of claiming the prior receipt covers it.",
+      "acceptance_criteria": [
+        "Does not treat assistant draft usage as author approval.",
+        "Distinguishes unchanged candidate bytes from changed registry dependency.",
+        "Does not invent a completed audit or expand to whole-paper rewriting."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/state-and-authority.md"]
+    },
+    {
+      "id": "terminology_empty_inventory_does_not_block_grammar",
+      "prompt": "Correct only The two groups was compared. The project has an empty terminology registry, a nonempty style profile and a literal-scan PASS. Give the local repair and explain what that scan result establishes. Do not create a glossary or require a full manuscript review.",
+      "expected_output": "Uses were, preserves the narrow grammar scope and states that no configured matches does not certify a complete terminology inventory or semantic consistency.",
+      "acceptance_criteria": [
+        "Completes the grammar repair without unnecessary project setup.",
+        "Does not claim complete vocabulary coverage from an empty registry.",
+        "Does not invent a scan execution or wider verification."
+      ],
+      "files": ["skills/academic-writing-skills/SKILL.md", "skills/academic-writing-skills/references/state-and-authority.md"]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "skill_name": "paper-review",
+  "evals": [
+    {
+      "id": "hybrid_psychometrics_llm_routing",
+      "prompt": "Review a study that uses LLM-generated survey respondents, CFA, SEM, and human group comparisons. The Methods and Abstract make all components explicit.",
+      "expected_output": "A general review that loads both quantitative-psychometrics-sem and ai-llm-computational without asking the user, states why each module applies, and keeps measurement quality, repeated-generation dependence, and behavioral-validity claims distinct.",
+      "files": []
+    },
+    {
+      "id": "materially_ambiguous_factor_model",
+      "prompt": "Review a scale paper whose draft says only that factor analysis was conducted; it is unclear whether the analysis was exploratory or confirmatory and the distinction changes the required evidence.",
+      "expected_output": "One targeted clarification about the intended factor-analysis design while proceeding with review findings that do not depend on that answer; no broad intake questionnaire.",
+      "files": []
+    },
+    {
+      "id": "neutral_water_review_without_ethan_overlay",
+      "prompt": "A researcher asks for a review of a coupled flood-risk and household ABM paper but does not request a named reviewer style.",
+      "expected_output": "A general paper review using ai-llm-computational, water-cnhs-uncertainty, and flood-hydrodynamics-catastrophe as applicable, without loading Ethan-style preferences or project precedents.",
+      "files": []
+    },
+    {
+      "id": "explicit_ethan_style_composition",
+      "prompt": "Perform an Ethan-style R2 review of a water-resources ABM paper and compare it with the supplied R1 comments.",
+      "expected_output": "A review that composes the relevant neutral method and water modules with round-calibration and ethan-style-overlay, separates MUST/SHOULD/QUERY/PREFERENCE from severity, and reports evidence-backed cross-round status.",
+      "files": []
+    },
+    {
+      "id": "round_claim_without_prior_evidence",
+      "prompt": "Review an R3 manuscript and state which R2 comments were fixed, but the prior manuscript and comments are unavailable.",
+      "expected_output": "An integration-stage review that marks cross-round status not verifiable, does not invent prior issues, and still reports current high-risk findings separately.",
+      "files": []
+    },
+    {
+      "id": "generic_field_without_special_module",
+      "prompt": "Use paper-review to critique a conceptual medieval-history manuscript with no quantitative, computational, water, or named-reviewer context.",
+      "expected_output": "A general reader-function and evidence-scope review using the academic-writing core without forcing any bundled domain module or declaring the manuscript out of scope.",
+      "files": []
+    },
+    {
+      "id": "derived_display_and_notation_provenance",
+      "prompt": "Review a modeling paper whose equations reuse k for two parameters and whose main figure shows a normalized divergence band without defining the baseline, aggregation rule, or uncertainty meaning.",
+      "expected_output": "A review that loads display-notation-provenance, builds a cross-artifact symbol ledger, identifies the conflicting k definitions, traces the derived band from source through transformation and display to claim, and marks unavailable provenance as not verifiable without reconstructing the analysis.",
+      "files": []
+    },
+    {
+      "id": "simple_display_does_not_trigger_provenance_module",
+      "prompt": "Review a short qualitative paper containing one descriptive participant-count table with explicit categories, counts, source, and no transformations or formal notation.",
+      "expected_output": "A general review that does not load display-notation-provenance merely because a simple table is present, while still checking ordinary table-label and text agreement through the base review.",
+      "files": []
+    },
+    {
+      "id": "coded_rubric_preserves_genre_and_authority",
+      "prompt": "Review a conceptual article using a supplied group rubric that prefers three conclusion paragraphs and no table notes. The current author explicitly requests a two-paragraph conclusion, and the provided venue instructions allow table notes. Produce a coded check record; do not edit the paper.",
+      "expected_output": "Records applicable checks with source, authority, location, coverage and issue status; preserves the conceptual genre, current author instruction and permitted notes rather than making the rubric's preferences universal. Does not infer unread checks passed or invent scientific defects from the paragraph count.",
+      "acceptance_criteria": ["Distinguishes coverage from issue status", "Resolves the supplied source conflict without silently imposing the group preference", "Does not rewrite or certify the paper"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "moved_paragraph_without_requested_denominator",
+      "prompt": "A prior comment asks for the denominator of a reported conservation uptake percentage. In V2 the paragraph has moved to Methods and the author replies fixed, but no denominator is supplied anywhere in the provided current paper. Assess resolution and propose the smallest next action.",
+      "expected_output": "Classifies the requested clarification as open rather than resolved by relocation or reply; asks for the verified denominator and relevant display synchronization without inventing it or rewriting the entire section.",
+      "acceptance_criteria": ["Checks the requested function against current evidence", "Does not infer the missing denominator", "Keeps the action local"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "repaired_score_without_comment_reply",
+      "prompt": "A prior comment requests the meaning of a restoration score. There is no author reply. The supplied V2 defines the score before its first interpreted use and uses it consistently in the caption. Source outputs are not supplied. Assess the manuscript repair and distinguish what remains unverified.",
+      "expected_output": "Marks the definition repair resolved from the manuscript rather than open from the missing reply; does not claim plotted values or research validity were verified; treats any required reply as a separate deliverable.",
+      "acceptance_criteria": ["No false unresolved issue from thread silence", "No false numerical certification", "Preserves the existing clear definition"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "expected_input_contrast_and_distinct_methods_contribution",
+      "prompt": "A methods paper reports larger simulated material loss for a group initialized with more material. Its stated contribution is a reproducible coupling algorithm, evaluated against a supplied implementation baseline; it explicitly says the group ranking is expected. Assess contribution framing without new analyses.",
+      "expected_output": "Does not call the entire study trivial or demand surprising findings. Separates the expected input contrast from the evaluated methodological contribution, retaining supported claims and noting unavailable evidence without fabricating a new mechanism or normalized result.",
+      "acceptance_criteria": ["Recognizes the stated and evaluated methods contribution", "Does not require unexpected results", "Does not invent additional analyses"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "downscaled_diagram_sign_is_not_confirmed_error",
+      "prompt": "A downscaled reaction diagram appears to show a negative coefficient, while its table gives a positive value. A connector crosses the label and the original-resolution image is not yet available. Decide the issue status and smallest next check without changing the value.",
+      "expected_output": "Treats the apparent sign conflict as unverified; requests original-resolution inspection to distinguish the printed sign from the connector. Does not choose a sign, certify agreement, or change the analysis based on the thumbnail.",
+      "acceptance_criteria": ["No confirmed-error claim from the thumbnail alone", "Distinguishes the printed symbol from diagram geometry", "No invented numerical repair"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "unreported_generated_record_selection",
+      "prompt": "Review a synthetic mobility-diary comparison. Each of two commuter groups supplies 400 profiles; parser-invalid generated records are dropped, leaving 360 and 180 records. The paper reports the retained-record mean differences as representative of all 800 profiles and provides no screening note or analysis of excluded profiles. No raw logs are supplied. Do not rerun or edit the study.",
+      "expected_output": "Traces screening to the retained population and identifies the unsupported all-profile scope. Requests verified exclusion information or a bounded claim, without inventing missing outcomes, quantifying bias, requiring equal samples, or automatically demanding a new experiment.",
+      "acceptance_criteria": ["Identifies the selection-to-claim boundary", "Separates documented counts from unverified bias magnitude", "Keeps the next action bounded"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "transparent_retained_record_comparison_control",
+      "prompt": "Review a synthetic mobility-diary comparison. Each of two commuter groups supplies 400 profiles; parser-invalid generated records are dropped, leaving 360 and 180. Methods and the caption report the attempted and retained counts and the screening rule. The paper restricts its descriptive mean comparison to valid generated diaries, states that it does not estimate all-profile differences, and makes no real-world population claim. The supplied screening ledger agrees. Do not edit the study.",
+      "expected_output": "Preserves the transparent, descriptive retained-record comparison rather than fabricating an all-profile claim or treating unequal retention as proven bias. Does not demand equal group sizes, reruns, or redundant limitations. Marks unavailable raw content unverified without overturning the supplied limited conclusion.",
+      "acceptance_criteria": ["Preserves the explicitly limited comparison", "No automatic error claim from unequal retained counts", "No unrequested rerun or global rewrite"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "nonsignificant_difference_not_equivalence",
+      "prompt": "Review a sensor-comparison conclusion: The two instruments are equivalent because a difference test returned p = 0.61. No equivalence bounds or equivalence analysis are provided. The outcome and instruments are otherwise clearly defined. Propose only the necessary claim correction, not new results.",
+      "expected_output": "Explains that the supplied test did not detect a difference, not that it established equivalence. Narrows the sentence to that supported finding, or requests justified equivalence evidence only if the stronger claim must remain. Does not infer either equality or a meaningful difference.",
+      "acceptance_criteria": ["Distinguishes nondetection from equivalence", "Does not invent an effect or equivalence margin", "Limits correction to the unsupported claim"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "supported_bounded_equivalence_control",
+      "prompt": "Review a sensor-comparison conclusion. The supplied preregistration justifies an equivalence interval of -1 to +1 degree Celsius for the paired mean temperature difference in this study. The supplied analysis correctly passes the registered paired two-one-sided equivalence tests at alpha = 0.05, with a 90% confidence interval of -0.2 to +0.3 degrees. The conclusion says the instruments are equivalent within these bounds for mean temperature in the tested setting, not identical on all outcomes. Preserve supported wording; do not rerun the analysis.",
+      "expected_output": "Retains the bounded, supported equivalence conclusion and its quantity, bounds and setting. Does not replace it with merely no significant difference or demand an unrelated new test. Distinguishes the supplied analysis evidence from independent raw-data recomputation.",
+      "acceptance_criteria": ["Retains supported equivalence without overcorrection", "Preserves metric, bounds and study scope", "Does not claim raw-data verification"],
+      "files": ["skills/paper-review/references/review-checklist-and-cases.md"]
+    },
+    {
+      "id": "author_reply_is_not_verified_resolution",
+      "prompt": "Compare a reviewer comment, an author reply saying fixed, and the current manuscript. The requested sensitivity definition was added to Methods but the figure caption and supplement still use the old definition.",
+      "expected_output": "A round-calibrated regression audit that separates instruction, author claim, and verified current changes; classifies the issue as partial rather than resolved; and names the stale caption and supplement as affected artifacts.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rhetorilex"
+version = "0.2.0"
+description = "Free local academic paraphrase skill and evidence-safe writing workbench"
+requires-python = ">=3.10"
+dependencies = []
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Reza Prama Arviandi" }]
+keywords = ["academic-paraphrase", "paraphrasing-tool", "academic-writing", "scientific-writing", "research-writing", "academic-english", "phrasebank", "local-first", "pwa", "agent-skills", "codex", "evidence-calibration", "offline"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "Topic :: Text Processing :: Linguistic",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+Homepage = "https://rezaprama.github.io/RhetoriLex/"
+Repository = "https://github.com/rezaprama/RhetoriLex"
+Documentation = "https://rezaprama.github.io/RhetoriLex/"
+Research = "https://github.com/rezaprama/RhetoriLex/blob/main/docs/discovery-research.md"
+Changelog = "https://github.com/rezaprama/RhetoriLex/blob/main/CHANGELOG.md"
+
+[project.scripts]
+rhetorilex = "rhetorilex.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rhetorilex = ["resources/*.json"]
+
+[tool.unittest]
+start-directory = "tests"
